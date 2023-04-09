@@ -15,6 +15,11 @@ class CreatePelajaransTable extends Migration
     {
         Schema::create('pelajarans', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('pendidikan_id');
+            $table->string('nama_pelajaran');
+            $table->integer('harga_pelajaran');
+            $table->foreign('pendidikan_id')->references('id')->on('pendidikans')->onDelete('cascade');
             $table->timestamps();
         });
     }

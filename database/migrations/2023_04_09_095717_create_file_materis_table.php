@@ -15,6 +15,12 @@ class CreateFileMaterisTable extends Migration
     {
         Schema::create('file_materis', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('materi_id');
+            $table->text('nama_file');
+            $table->text('lokasi_file');
+            $table->string('extensi_file');
+            $table->foreign('materi_id')->references('id')->on('materis')->onDelete('cascade');
             $table->timestamps();
         });
     }

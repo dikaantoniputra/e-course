@@ -15,6 +15,11 @@ class CreateTentorsTable extends Migration
     {
         Schema::create('tentors', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pendidikan_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('pendidikan_id')->references('id')->on('pendidikans');
             $table->timestamps();
         });
     }
