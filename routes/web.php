@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserControler;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\TentorController;
+use App\Http\Controllers\PelajaranController;
+use App\Http\Controllers\PendidikanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('page.index');
 });
+
+Route::get('/login', function () {
+    return view('auth.index');
+});
+
+Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+Route::resource('siswa', SiswaController::class); 
+
+
+Route::get('/tentor', [TentorController::class, 'index'])->name('tentor.index');
+Route::resource('tentor', TentorController::class); 
+
+
+Route::get('/user', [UserControler::class, 'index'])->name('user.index');
+Route::resource('user', UserControler::class); 
+
+Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
+Route::resource('pelajaran', PelajaranController::class); 
+
+
+Route::get('/pendidikan', [PendidikanController::class, 'index'])->name('pendidikan.index');
+Route::resource('pendidikan', PendidikanController::class); 
+
+
