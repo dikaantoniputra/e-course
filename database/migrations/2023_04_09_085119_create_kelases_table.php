@@ -15,10 +15,10 @@ class CreateKelasesTable extends Migration
     {
         Schema::create('kelases', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
             $table->unsignedBigInteger('pendidikan_id');
-            $table->string('nama_kelas');
             $table->foreign('pendidikan_id')->references('id')->on('pendidikans')->onDelete('cascade');
+            $table->string('slug');
+            $table->string('nama_kelas');
             $table->timestamps();
         });
     }

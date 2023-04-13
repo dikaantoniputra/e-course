@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
@@ -45,5 +46,9 @@ Route::resource('pelajaran', PelajaranController::class);
 
 Route::get('/pendidikan', [PendidikanController::class, 'index'])->name('pendidikan.index');
 Route::resource('pendidikan', PendidikanController::class); 
+
+Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+Route::resource('kelas', KelasController::class); 
+
 
 

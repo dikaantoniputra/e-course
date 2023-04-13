@@ -55,7 +55,7 @@
       
         <li class="menu-label">Master Kelas</li>
         <li>
-            <a  href="javascript:;">
+            <a  href="{{ url('kelas') }}">
                 <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
                 </div>
                 <div class="menu-title">Kelas</div>
