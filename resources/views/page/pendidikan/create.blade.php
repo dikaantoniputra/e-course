@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-user
+pendidikan
 @endsection
 
 @push('after-style')
@@ -13,9 +13,9 @@ user
     <div class="col-md-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('siswa.store') }}" id="form" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('pendidikan.store') }}" id="form">
                     @csrf
-                    @include('page.user.form')
+                    @include('page.pendidikan.form')
                 </form>
             </div>
         </div>

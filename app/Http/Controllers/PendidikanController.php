@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class PendidikanController extends Controller
@@ -20,7 +21,7 @@ class PendidikanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $model = 'siswa';
+            $model = 'pendidikan';
             // $data = User::select('*');
             return Datatables::of(Pendidikan::select('*'))
         // ->addIndexColumn()
@@ -49,7 +50,9 @@ class PendidikanController extends Controller
     public function create()
     {
         //
+        return view('page.pendidikan.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -59,7 +62,28 @@ class PendidikanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'nama_pendidikan' => 'required|max:255'
+        ]);
+    
+        // Buat instance model Pendidikan dan isi dengan data dari form
+        $pendidikan = new Pendidikan;
+        $pendidikan->nama_pendidikan = $validatedData['nama_pendidikan'];
+    
+        // Buat slug dari input "nama_pendidikan" menggunakan helper Str::slug()
+        $slug = Str::slug($validatedData['nama_pendidikan']);
+        $existingSlugCount = Pendidikan::where('slug', 'like', "{$slug}%")->count();
+        if ($existingSlugCount > 0) {
+            $slug .= '-' . ($existingSlugCount + 1);
+        }
+        $pendidikan->slug = $slug;
+    
+        // Simpan ke database
+        $pendidikan->save();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pendidikan.index');
     }
 
     /**
@@ -79,10 +103,16 @@ class PendidikanController extends Controller
      * @param  \App\Models\Pendidikan  $pendidikan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pendidikan $pendidikan)
+    public function edit($id)
     {
         //
+        $pendidikan = Pendidikan::select('*')->findOrFail($id);
+        return view('page.pendidikan.edit', [
+            'pendidikan' => $pendidikan,
+        ]);
+       
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -91,10 +121,34 @@ class PendidikanController extends Controller
      * @param  \App\Models\Pendidikan  $pendidikan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pendidikan $pendidikan)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'nama_pendidikan' => 'required|max:255'
+        ]);
+    
+        // Cari model Pendidikan berdasarkan id
+        $pendidikan = Pendidikan::findOrFail($id);
+    
+        // Isi model dengan data dari form
+        $pendidikan->nama_pendidikan = $validatedData['nama_pendidikan'];
+    
+        // Buat slug dari input "nama_pendidikan" menggunakan helper Str::slug()
+        $slug = Str::slug($validatedData['nama_pendidikan']);
+        $existingSlugCount = Pendidikan::where('slug', 'like', "{$slug}%")->count();
+        if ($existingSlugCount > 0) {
+            $slug .= '-' . ($existingSlugCount + 1);
+        }
+        $pendidikan->slug = $slug;
+    
+        // Simpan ke database
+        $pendidikan->save();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pendidikan.index');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -102,8 +156,15 @@ class PendidikanController extends Controller
      * @param  \App\Models\Pendidikan  $pendidikan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pendidikan $pendidikan)
+    public function destroy($id)
     {
-        //
+        // Cari model Pendidikan berdasarkan id
+        $pendidikan = Pendidikan::findOrFail($id);
+    
+        // Hapus model dari database
+        $pendidikan->delete();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pendidikan.index');
     }
 }
