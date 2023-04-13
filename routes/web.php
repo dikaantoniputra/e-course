@@ -30,27 +30,22 @@ Route::get('/login', function () {
 });
 
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
-Route::resource('siswa', SiswaController::class); 
+Route::resource('siswa', SiswaController::class);
 
 
 Route::get('/tentor', [TentorController::class, 'index'])->name('tentor.index');
-Route::resource('tentor', TentorController::class); 
+Route::resource('tentor', TentorController::class);
 
 
 Route::get('/user', [UserControler::class, 'index'])->name('user.index');
-Route::resource('user', UserControler::class); 
+Route::resource('user', UserControler::class);
 
 Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
-Route::resource('pelajaran', PelajaranController::class); 
+Route::resource('pelajaran', PelajaranController::class);
 
 
 Route::get('/pendidikan', [PendidikanController::class, 'index'])->name('pendidikan.index');
-Route::resource('pendidikan', PendidikanController::class); 
+Route::resource('pendidikan', PendidikanController::class);
 
-Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-Route::resource('kelases', KelaseController::class);
-
-
-
-
-
+Route::get('/kelase', [KelasController::class, 'index'])->name('kelase.index');
+Route::resource('kelase', KelasController::class);

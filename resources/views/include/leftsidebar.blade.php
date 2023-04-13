@@ -18,7 +18,7 @@
                 </div>
                 <div class="menu-title">Dashboard</div>
             </a>
-            
+
         </li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -33,7 +33,7 @@
                 </li>
                 <li> <a href="{{ url('tentor') }}"><i class="bx bx-right-arrow-alt"></i>Data Mentor</a>
                 </li>
-               
+
             </ul>
         </li>
         <li class="menu-label">Master Pelajaran</li>
@@ -51,16 +51,16 @@
                 <div class="menu-title">Materi</div>
             </a>
         </li>
-        
-      
+
+
         <li class="menu-label">Master Kelas</li>
         <li>
-            <a  href="{{ url('kelas') }}">
+            <a href="{{ url('kelase') }}">
                 <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
                 </div>
                 <div class="menu-title">Kelas</div>
             </a>
-           
+
         </li>
         <li>
             <a href="javascript:;">
@@ -84,10 +84,10 @@
                 </div>
                 <div class="menu-title">Transaksi</div>
             </a>
-           
+
         </li>
-       
-     
+
+
     </ul>
     <!--end navigation-->
 </div>
