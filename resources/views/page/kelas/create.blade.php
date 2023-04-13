@@ -13,7 +13,7 @@ kelas
     <div class="col-md-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('kelas.store') }}" id="form">
+                <form method="POST" action="{{ route('kelases.store') }}" id="form">
                     @csrf
                     @include('page.kelas.form')
                 </form>

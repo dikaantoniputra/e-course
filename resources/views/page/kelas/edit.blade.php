@@ -9,7 +9,7 @@ Edit Buku Pelajaran
     <div class="col-md-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('kelas.update', $kelas) }}" id="form" autocomplete="off"
+                <form method="POST" action="{{ route('kelases.update', $kelas) }}" id="form" autocomplete="off"
                     enctype="multipart/form-data">
                     @csrf
                     @method('put')

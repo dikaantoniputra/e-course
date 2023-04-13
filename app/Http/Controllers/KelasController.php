@@ -21,7 +21,7 @@ class KelasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $model = 'kelases';
+            $model = 'Kelase';
             // $data = User::select('*');
             return Datatables::of(Kelase::select('*'))
         // ->addIndexColumn()
@@ -105,9 +105,9 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kelas)
+    public function edit(Kelase $kelas)
     {
-        //
+        return view('page.kelas.edit', compact('kelas'));
     }
 
     /**

@@ -20,7 +20,7 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a href="{{ route('kelas.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
+                <a href="{{ route('kelases.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
                 <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>

@@ -48,7 +48,9 @@ Route::get('/pendidikan', [PendidikanController::class, 'index'])->name('pendidi
 Route::resource('pendidikan', PendidikanController::class); 
 
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-Route::resource('kelas', KelasController::class); 
+Route::resource('kelases', KelaseController::class);
+
+
 
 
 
