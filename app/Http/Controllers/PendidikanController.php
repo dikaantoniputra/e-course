@@ -71,12 +71,8 @@ class PendidikanController extends Controller
         $pendidikan = new Pendidikan;
         $pendidikan->nama_pendidikan = $validatedData['nama_pendidikan'];
     
-        // Buat slug dari input "nama_pendidikan" menggunakan helper Str::slug()
-        $slug = Str::slug($validatedData['nama_pendidikan']);
-        $existingSlugCount = Pendidikan::where('slug', 'like', "{$slug}%")->count();
-        if ($existingSlugCount > 0) {
-            $slug .= '-' . ($existingSlugCount + 1);
-        }
+        // Buat slug acak sepanjang 16 karakter
+        $slug = Str::random(16);
         $pendidikan->slug = $slug;
     
         // Simpan ke database
@@ -85,6 +81,7 @@ class PendidikanController extends Controller
         // Redirect ke halaman yang diinginkan
         return redirect()->route('pendidikan.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -134,13 +131,9 @@ class PendidikanController extends Controller
         // Isi model dengan data dari form
         $pendidikan->nama_pendidikan = $validatedData['nama_pendidikan'];
     
-        // Buat slug dari input "nama_pendidikan" menggunakan helper Str::slug()
-        $slug = Str::slug($validatedData['nama_pendidikan']);
-        $existingSlugCount = Pendidikan::where('slug', 'like', "{$slug}%")->count();
-        if ($existingSlugCount > 0) {
-            $slug .= '-' . ($existingSlugCount + 1);
-        }
-        $pendidikan->slug = $slug;
+       // Buat slug acak sepanjang 16 karakter
+       $slug = Str::random(16);
+       $pendidikan->slug = $slug;
     
         // Simpan ke database
         $pendidikan->save();

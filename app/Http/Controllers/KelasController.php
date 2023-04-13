@@ -23,7 +23,8 @@ class KelasController extends Controller
         if ($request->ajax()) {
             $model = 'kelase';
             // $data = User::select('*');
-            return Datatables::of(Kelase::select('*'))
+            return Datatables::of(Kelase::with(['pendidikan']))
+
                 // ->addIndexColumn()
                 ->addColumn('action', function ($object) use ($model) {
                     $text = "";
@@ -61,32 +62,29 @@ class KelasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // Validasi input
-        $validatedData = $request->validate([
-            'pendidikan_id' => 'required',
-            'nama_kelas' => 'required|max:255',
-        ]);
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'pendidikan_id' => 'required',
+        'nama_kelas' => 'required|max:255',
+    ]);
 
-        // Buat instance model Kelas dan isi dengan data dari form
-        $kelas = new Kelase;
-        $kelas->pendidikan_id = $validatedData['pendidikan_id'];
-        $kelas->nama_kelas = $validatedData['nama_kelas'];
+    // Buat instance model Kelas dan isi dengan data dari form
+    $kelas = new Kelase;
+    $kelas->pendidikan_id = $validatedData['pendidikan_id'];
+    $kelas->nama_kelas = $validatedData['nama_kelas'];
 
-        // Buat slug dari input "nama_kelas" menggunakan helper Str::slug()
-        $slug = Str::slug($validatedData['nama_kelas']);
-        $existingSlugCount = Kelase::where('slug', 'like', "{$slug}%")->count();
-        if ($existingSlugCount > 0) {
-            $slug .= '-' . ($existingSlugCount + 1);
-        }
-        $kelas->slug = $slug;
+    // Buat slug acak sepanjang 16 karakter
+    $slug = Str::random(16);
+    $kelas->slug = $slug;
 
-        // Simpan ke database
-        $kelas->save();
+    // Simpan ke database
+    $kelas->save();
 
-        // Redirect ke halaman yang diinginkan
-        return redirect()->route('kelase.index');
-    }
+    // Redirect ke halaman yang diinginkan
+    return redirect()->route('kelase.index');
+}
+
 
     /**
      * Display the specified resource.
@@ -105,9 +103,11 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelase $kelas)
+    public function edit($id)
     {
-        return view('page.kelas.edit', compact('kelas'));
+        $kelas = Kelase::select('*')->findOrFail($id);
+        $pendidikan = Pendidikan::all();
+        return view('page.kelas.edit', compact('pendidikan','kelas'));
     }
 
     /**
@@ -117,11 +117,30 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kelas)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'pendidikan_id' => 'required',
+        'nama_kelas' => 'required|max:255',
+    ]);
 
+    // Buat instance model Kelas dan isi dengan data dari form
+    $kelas = Kelase::findOrFail($id);
+    $kelas->pendidikan_id = $validatedData['pendidikan_id'];
+    $kelas->nama_kelas = $validatedData['nama_kelas'];
+
+    // Buat slug acak sepanjang 16 karakter
+    $slug = Str::random(16);
+    $kelas->slug = $slug;
+
+    // Simpan ke database
+    $kelas->save();
+
+    // Redirect ke halaman yang diinginkan
+    return redirect()->route('kelase.index');
+}
+    
     /**
      * Remove the specified resource from storage.
      *

@@ -89,8 +89,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'slug',
-                        name: 'email'
+                        data: 'pendidikan.nama_pendidikan',
+                        name: 'pendidikan.nama_pendidikan'
                     },
                     {
                         data: 'slug',
