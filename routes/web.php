@@ -38,6 +38,7 @@ Route::resource('tentor', TentorController::class);
 
 
 Route::get('/user', [UserControler::class, 'index'])->name('user.index');
+Route::post('/user/getkelas', [UserControler::class, 'getKelas'])->name('user.getkelas');
 Route::resource('user', UserControler::class);
 
 Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
