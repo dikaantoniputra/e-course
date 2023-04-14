@@ -39,4 +39,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class);
+    }
+
+    public function tentor()
+    {
+        return $this->hasOne(Tentor::class);
+    }
 }
