@@ -11,51 +11,32 @@
                         <h5 class="mb-0 text-info">@yield('title') Registration</h5>
                     </div>
                     <hr/>
+
                     <div class="row mb-3">
-                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Enter Your Name</label>
+                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Kategori Pelajaran</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputEnterYourName" placeholder="Enter Your Name">
+                            <select class="form-select" id="role" name="pendidikan_id">
+                                @foreach($pendidikan as $r)
+                                    <option value="{{ $r->id }}" {{ (!empty($pelajaran) && $pelajaran->pendidikan_id == $r->id) ? 'selected' : (old('pendidikan_id') == $r->id ? 'selected' : '') }}>{{ $r->nama_pendidikan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Nama Pelajaran </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputPhoneNo2" placeholder="Nama Pelajaran" name="nama_pelajaran" value="{{ $pelajaran->nama_pelajaran ?? '' }}">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Phone No</label>
+                        <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Harga</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputPhoneNo2" placeholder="Phone No">
+                            <input type="number" class="form-control" id="inputEmailAddress2" placeholder="Harga" name="harga_pelajaran" value="{{ $pelajaran->harga_pelajaran }}">
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Email Address</label>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputEmailAddress2" placeholder="Email Address">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputChoosePassword2" class="col-sm-3 col-form-label">Choose Password</label>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputChoosePassword2" placeholder="Choose Password">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputConfirmPassword2" class="col-sm-3 col-form-label">Confirm Password</label>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputConfirmPassword2" placeholder="Confirm Password">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputAddress4" class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control" id="inputAddress4" rows="3" placeholder="Address"></textarea>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputAddress4" class="col-sm-3 col-form-label"></label>
-                        <div class="col-sm-9">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck4">
-                                <label class="form-check-label" for="gridCheck4">Check me out</label>
-                            </div>
-                        </div>
-                    </div>
+                   
+                    
                     <div class="row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">

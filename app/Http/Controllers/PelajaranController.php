@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Pelajaran;
+use App\Models\Pendidikan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
@@ -20,9 +23,9 @@ class PelajaranController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $model = 'siswa';
+            $model = 'pelajaran';
             // $data = User::select('*');
-            return Datatables::of(Pelajaran::select('*'))
+            return Datatables::of(Pelajaran::with(['pendidikan']))
         // ->addIndexColumn()
                      ->addColumn('action', function ($object) use ($model) {
                         $text = "";
@@ -50,7 +53,8 @@ class PelajaranController extends Controller
     public function create()
     {
         //
-        return view('page.pendidikan.create');
+        $pendidikan = Pendidikan::all();
+        return view('page.pelajaran.create', compact('pendidikan'));
     }
 
     /**
@@ -61,7 +65,28 @@ class PelajaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'pendidikan_id' => 'required',
+            'nama_pelajaran' => 'required|max:255',
+            'harga_pelajaran' => 'required|max:255',
+        ]);
+    
+        // Buat instance model Kelas dan isi dengan data dari form
+        $pelajaran = new Pelajaran;
+        $pelajaran->pendidikan_id = $validatedData['pendidikan_id'];
+        $pelajaran->nama_pelajaran = $validatedData['nama_pelajaran'];
+        $pelajaran->harga_pelajaran = $validatedData['harga_pelajaran'];
+    
+        // Buat slug acak sepanjang 16 karakter
+        $slug = Str::random(16);
+        $pelajaran->slug = $slug;
+    
+        // Simpan ke database
+        $pelajaran->save();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pelajaran.index');
     }
 
     /**
@@ -81,9 +106,12 @@ class PelajaranController extends Controller
      * @param  \App\Models\Pelajaran  $pelajaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pelajaran $pelajaran)
+    public function edit($id)
     {
         //
+        $pelajaran = Pelajaran::select('*')->findOrFail($id);
+        $pendidikan = Pendidikan::all();
+        return view('page.pelajaran.edit', compact('pendidikan','pelajaran'));
     }
 
     /**
@@ -93,9 +121,30 @@ class PelajaranController extends Controller
      * @param  \App\Models\Pelajaran  $pelajaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pelajaran $pelajaran)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'pendidikan_id' => 'required',
+            'nama_pelajaran' => 'required|max:255',
+            'harga_pelajaran' => 'required|max:255',
+        ]);
+
+        // Buat instance model Kelas dan isi dengan data dari form
+        $pelajaran = Pelajaran::findOrFail($id);
+        $pelajaran->pendidikan_id = $validatedData['pendidikan_id'];
+        $pelajaran->nama_pelajaran = $validatedData['nama_pelajaran'];
+        $pelajaran->harga_pelajaran = $validatedData['harga_pelajaran'];
+
+        // Buat slug acak sepanjang 16 karakter
+        $slug = Str::random(16);
+        $pelajaran->slug = $slug;
+
+        // Simpan ke database
+        $pelajaran->save();
+
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pelajaran.index');
     }
 
     /**
@@ -104,8 +153,15 @@ class PelajaranController extends Controller
      * @param  \App\Models\Pelajaran  $pelajaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pelajaran $pelajaran)
+    public function destroy($id)
     {
-        //
+        // Cari model Pendidikan berdasarkan id
+        $pelajaran = Pelajaran::findOrFail($id);
+    
+        // Hapus model dari database
+        $pelajaran->delete();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('pelajaran.index');
     }
 }

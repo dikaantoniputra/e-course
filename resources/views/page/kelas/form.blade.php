@@ -17,7 +17,7 @@
                         <div class="col-sm-9">
                             <select class="form-select" id="role" name="pendidikan_id">
                                 @foreach($pendidikan as $r)
-                                    <option value="{{ $r->id }}" {{ (!empty($user) && $user->pendidikan_id == $r->id) ? 'selected' : (old('pendidikan_id') == $r->id ? 'selected' : '') }}>{{ $r->nama_pendidikan }}</option>
+                                    <option value="{{ $r->id }}" {{ (!empty($kelas) && $kelas->pendidikan_id == $r->id) ? 'selected' : (old('pendidikan_id') == $r->id ? 'selected' : '') }}>{{ $r->nama_pendidikan }}</option>
                                 @endforeach
                             </select>
                         </div>
