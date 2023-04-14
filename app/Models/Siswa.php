@@ -11,6 +11,17 @@ class Siswa extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function pendidikan()
+    {
+        return $this->belongsTo(Pendidikan::class);
+    }
+
+    public function kelas()
+    {
+        # code...
+        return $this->belongsTo(Kelase::class);
     }
 }
