@@ -51,24 +51,25 @@
                                 <th>Kelas</th>
                                 <th>Username</th>
                                 <th>Email</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                {{-- <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            
-                            <td>
+                            {{-- <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+
+                                <td>
                                     <button type="button" class="btn btn-warning ">Edit</button>
-										<button type="button" class="btn btn-primary ">Primary</button>
-										<button type="button" class="btn btn-danger ">Danger</button>
-                            <td> --}}
-                            </tr>
+                                    <button type="button" class="btn btn-primary ">Primary</button>
+                                    <button type="button" class="btn btn-danger ">Danger</button>
+                                <td>
+                            </tr> --}}
                         </tbody>
 
                     </table>
@@ -83,30 +84,74 @@
 
 @push('after-script')
     <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
+        // $(document).ready(function() {
+        //     $('#example').DataTable();
+        // });
 
         // lek onok datae
-        // $(document).ready(function() {
-        //     $('#example').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {
-        //         url: '{{ route('siswa.index') }}',
+        $(document).ready(function() {
+            $('#example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('siswa.index') }}',
 
-        //     },
-        //     columns: [
-        //             {data: 'id', name: 'id'}, 
-        //             {data: 'email', name: 'email'},     
-        //             {data: 'name_submitter', name: 'name_submitter'}, 
-        //             {data: 'dead_name', name: 'dead_name'},
-        //             {data: 'hospital_regency', name: 'hospital_regency'}, 
-        //             {data: 'created_at', name: 'created_at'},
-        //             {data: 'status', name: 'status'},
-        //             {data: 'action', name: 'action', orderable: false, searchable: false}
-        //         ] 
-        //     });
-        // });
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'slug',
+                        name: 'slug'
+                    },
+                    {
+                        data: 'user.name',
+                        name: 'user.name'
+                    },
+                    {
+                        data: 'user.address',
+                        name: 'user.address'
+                    },
+                    {
+                        data: 'user.phone',
+                        name: 'user.phone'
+                    },
+                    {
+                        data: 'pendidikan.nama_pendidikan',
+                        name: 'pendidikan.nama_pendidikan'
+                    },
+                    {
+                        data: 'kelas.nama_kelas',
+                        name: 'kelas.nama_kelas'
+                    },
+                    {
+                        data: 'user.username',
+                        name: 'user.username'
+                    },
+                    {
+                        data: 'user.email',
+                        name: 'user.email'
+                    },
+                    {
+                        data: 'user.status',
+                        // name: 'user.status'
+                        render: function(data) {
+                            if (data === 1) {
+                                return 'active';
+                            } else {
+                                return 'non-active';
+                            }
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
     </script>
 @endpush
