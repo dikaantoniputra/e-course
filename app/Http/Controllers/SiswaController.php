@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pendidikan;
 use App\Models\User;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Kelase;
+use Illuminate\Support\Str;
 
 class SiswaController extends Controller
 {
@@ -33,6 +36,7 @@ class SiswaController extends Controller
                         <path d="M16 5l3 3"></path>
                      </svg> Edit</a>';
                     $text .= "<form class='form-horizontal' style='display: inline;' method='POST' action='" . route($model . '.destroy', [$model => $object]) . "'><input type='hidden' name='_token' value='" . csrf_token() . "'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> Hapus</button></form><form>";
+
                     return $text;
                 })
                 ->rawColumns(['action'])
@@ -49,8 +53,15 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
-        return view('page.siswa.create');
+        $pendidikan = Pendidikan::all();
+        return view('page.siswa.create', compact('pendidikan'));
+    }
+
+    public function getKelas(Request $request)
+    {
+        $kelas = Kelase::where('pendidikan_id', $request->id)->get();
+        // dd($request);
+        return response()->json(array('kelas' => $kelas), 200);
     }
 
     /**
@@ -61,7 +72,37 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'name' => 'required|max:225',
+            'address' => 'required',
+            'phone' => 'required|unique:users,phone',
+            'pendidikan' => 'required',
+            'kelas' => 'required',
+            'username' => 'required|max:50|unique:users,username',
+            'email' => 'required|unique:users,email',
+            'password' => 'required'
+        ]);
+
+        $user = new User;
+        $user->slug = Str::random(16);
+        $user->name = $validate['name'];
+        $user->address = $validate['address'];
+        $user->phone = $validate['phone'];
+        $user->username = $validate['username'];
+        $user->email = $validate['email'];
+        $user->password = $validate['password'];
+        $user->role = 'siswa';
+        $user->status = 0;
+        $user->save();
+
+        $siswa = new Siswa;
+        $siswa->slug = Str::random(16);
+        $siswa->user_id = $user->id;
+        $siswa->pendidikan_id = $validate['pendidikan'];
+        $siswa->kelas_id = $validate['kelas'];
+        $siswa->save();
+
+        return redirect(route('siswa.index'));
     }
 
     /**
@@ -81,9 +122,14 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $siswa)
+    public function edit($id)
     {
-        //
+        $siswa = Siswa::with('user', 'kelas', 'pendidikan')
+            ->where('id', $id)->first();
+        $pendidikan = Pendidikan::all();
+        $kelas = Kelase::where('pendidikan_id', $siswa->pendidikan->id)->get();
+
+        return view('page.siswa.edit', compact('siswa', 'pendidikan', 'kelas'));
     }
 
     /**
@@ -93,9 +139,52 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function checkUpdateUser($siswa, $field, $request)
     {
-        //
+        $user = User::where($field, $request)
+            ->where($field, '<>', $siswa->user->$field)->count();
+
+        return $user;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'name' => 'required|max:225',
+            'address' => 'required',
+            'phone' => 'required',
+            'pendidikan' => 'required',
+            'kelas' => 'required',
+            'username' => 'required|max:50',
+            'email' => 'required',
+        ]);
+
+        $siswa = Siswa::with('user')->where('id', $id)->first();
+        $field = ['phone', 'username', 'email'];
+        foreach ($field as $f) {
+            $user = $this->checkUpdateUser($siswa, $f, $validate[$f]);
+            if ($user > 0) {
+                $message = ($f == 'phone') ? "Nomor telepon telah dipakai pengguna lain" : ucfirst($f) . " telah dipakai pengguna lain";
+                return $message;
+            }
+        }
+
+        $user = User::where('id', $siswa->user_id)->first();
+        $user->name = $validate['name'];
+        $user->address = $validate['address'];
+        $user->phone = $validate['phone'];
+        $user->username = $validate['username'];
+        $user->email = $validate['email'];
+        if ($request['password']) {
+            $user->password = $request['password'];
+        }
+        $user->save();
+
+        $siswa->pendidikan_id = $validate['pendidikan'];
+        $siswa->kelas_id = $validate['kelas'];
+        $siswa->save();
+
+        return redirect(route('siswa.index'));
     }
 
     /**
@@ -104,8 +193,27 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($id)
     {
-        //
+        $siswa = Siswa::with('user')->where('id', $id)->first();
+        $user = User::where('id', $siswa->user_id)->first();
+        $user->delete();
+
+        return redirect(route('siswa.index'));
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $user = User::find($request->id);
+
+        if ($user->status === 0) {
+            $user->status = 1;
+            $user->save();
+        } else {
+            $user->status = 0;
+            $user->save();
+        }
+
+        return response()->json([], 200);
     }
 }

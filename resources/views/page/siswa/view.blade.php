@@ -56,20 +56,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-
-                                <td>
-                                    <button type="button" class="btn btn-warning ">Edit</button>
-                                    <button type="button" class="btn btn-primary ">Primary</button>
-                                    <button type="button" class="btn btn-danger ">Danger</button>
-                                <td>
-                            </tr> --}}
                         </tbody>
 
                     </table>
@@ -85,17 +71,12 @@
 @push('after-script')
     <script>
         // $(document).ready(function() {
-        //     $('#example').DataTable();
-        // });
-
-        // lek onok datae
-        $(document).ready(function() {
+        function datatable() {
             $('#example').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: '{{ route('siswa.index') }}',
-
                 },
                 columns: [{
                         data: 'id',
@@ -135,12 +116,15 @@
                     },
                     {
                         data: 'user.status',
-                        // name: 'user.status'
-                        render: function(data) {
+                        render: function(data, type, row) {
                             if (data === 1) {
-                                return 'active';
+                                return '<button type="button" class="btn btn-info btn-sm rounded-pill btn-status" data-user="' +
+                                    row.user.id +
+                                    '" onclick="changeStatusSiswa()">active</button>';
                             } else {
-                                return 'non-active';
+                                return '<button type="button" class="btn btn-warning btn-sm rounded-pill btn-status" data-user="' +
+                                    row.user.id +
+                                    '" onclick="changeStatusSiswa()">non-active</button>';
                             }
                         }
                     },
@@ -152,6 +136,26 @@
                     }
                 ]
             });
-        });
+        }
+        datatable();
+        // });
+
+        function changeStatusSiswa() {
+            event.preventDefault();
+            const currentItem = event.target.getAttribute('data-user');
+            console.log(currentItem);
+            $("#example").dataTable().fnDestroy();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('siswa.setstatus') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": currentItem
+                },
+                success: function(response) {
+                    datatable();
+                }
+            });
+        }
     </script>
 @endpush

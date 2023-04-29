@@ -30,6 +30,8 @@ Route::get('/login', function () {
 });
 
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+Route::post('/siswa/getkelas', [SiswaController::class, 'getKelas'])->name('siswa.getkelas');
+Route::post('/siswa/setstatus', [SiswaController::class, 'changeStatus'])->name('siswa.setstatus');
 Route::resource('siswa', SiswaController::class);
 
 
