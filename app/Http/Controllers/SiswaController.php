@@ -90,7 +90,7 @@ class SiswaController extends Controller
         $user->phone = $validate['phone'];
         $user->username = $validate['username'];
         $user->email = $validate['email'];
-        $user->password = $validate['password'];
+        $user->password = bcrypt($validate['password']);
         $user->role = 'siswa';
         $user->status = 0;
         $user->save();
@@ -176,7 +176,7 @@ class SiswaController extends Controller
         $user->username = $validate['username'];
         $user->email = $validate['email'];
         if ($request['password']) {
-            $user->password = $request['password'];
+            $user->password = bcrypt($request['password']);
         }
         $user->save();
 

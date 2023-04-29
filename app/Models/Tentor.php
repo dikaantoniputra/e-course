@@ -13,4 +13,9 @@ class Tentor extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function pendidikan()
+    {
+        return $this->belongsTo(Pendidikan::class);
+    }
 }

@@ -36,6 +36,7 @@ Route::resource('siswa', SiswaController::class);
 
 
 Route::get('/tentor', [TentorController::class, 'index'])->name('tentor.index');
+Route::post('/tentor/setstatus', [TentorController::class, 'changeStatus'])->name('tentor.setstatus');
 Route::resource('tentor', TentorController::class);
 
 
