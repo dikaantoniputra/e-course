@@ -165,7 +165,7 @@ class SiswaController extends Controller
             $user = $this->checkUpdateUser($siswa, $f, $validate[$f]);
             if ($user > 0) {
                 $message = ($f == 'phone') ? "Nomor telepon telah dipakai pengguna lain" : ucfirst($f) . " telah dipakai pengguna lain";
-                return $message;
+                return back()->with("message", $message);
             }
         }
 
