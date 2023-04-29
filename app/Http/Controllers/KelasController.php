@@ -147,8 +147,15 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+   public function destroy($id)
     {
-        //
+        // Cari model Pendidikan berdasarkan id
+        $kelas = Kelase::findOrFail($id);
+    
+        // Hapus model dari database
+        $kelas->delete();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('kelase.index');
     }
 }

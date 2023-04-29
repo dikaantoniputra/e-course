@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-Edit Buku Pelajaran
+Edit Pelajaran
 @endsection
 
 @section('content')
@@ -9,11 +9,11 @@ Edit Buku Pelajaran
     <div class="col-md-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('siswa.update', $siswa) }}" id="form" autocomplete="off"
+                <form method="POST" action="{{ route('pelajaran.update', $pelajaran) }}" id="form" autocomplete="off"
                     enctype="multipart/form-data">
                     @csrf
                     @method('put')
-                    @include('page.siswa.form')
+                    @include('page.pelajaran.form')
                 </form>
             </div>
         </div>

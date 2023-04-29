@@ -13,7 +13,7 @@
     <!--navigation-->
     <ul class="metismenu" id="menu">
         <li>
-            <a href="javascript:;">
+            <a href="{{ url('/') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Dashboard</div>
@@ -55,6 +55,13 @@
 
         <li class="menu-label">Master Kelas</li>
         <li>
+            <a href="{{ url('pendidikan') }}">
+                <div class="parent-icon"><i class="bx bx-user-circle"></i>
+                </div>
+                <div class="menu-title">Pendidikan</div>
+            </a>
+        </li>
+        <li>
             <a href="{{ url('kelase') }}">
                 <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
                 </div>
@@ -70,14 +77,9 @@
             </a>
         </li>
 
+
         <li class="menu-label">Mater Umum</li>
-        <li>
-            <a href="{{ url('pendidikan') }}">
-                <div class="parent-icon"><i class="bx bx-user-circle"></i>
-                </div>
-                <div class="menu-title">User Pendidikan</div>
-            </a>
-        </li>
+       
         <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-lock"></i>
