@@ -9,6 +9,10 @@ class Pelajaran extends Model
 {
     use HasFactory;
 
+    
+    protected $guarded = [];
+
+
     public function pendidikan()
     {
         return $this->belongsTo(Pendidikan::class);

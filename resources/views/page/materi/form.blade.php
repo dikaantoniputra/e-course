@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xl-12 mx-auto">
-        <h6 class="mb-0 text-uppercase">Horizontal Form</h6>
+        <h6 class="mb-0 text-uppercase">Horizontal Form Materi</h6>
         <hr/>
         <div class="card border-top border-0 border-4 border-info">
             <div class="card-body">
@@ -15,31 +15,38 @@
                     <div class="row mb-3">
                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Kategori Pelajaran</label>
                         <div class="col-sm-9">
-                            <select class="form-select" id="role" name="pendidikan_id">
-                                @foreach($pendidikan as $r)
-                                    <option value="{{ $r->id }}" {{ (!empty($pelajaran) && $pelajaran->pendidikan_id == $r->id) ? 'selected' : (old('pendidikan_id') == $r->id ? 'selected' : '') }}>{{ $r->nama_pendidikan }}</option>
+                            <select class="form-select" id="role" name="pelajaran_id">
+                                @foreach($pelajaran as $r)
+                                    <option value="{{ $r->id }}">{{ $r->nama_pelajaran }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Nama Pelajaran </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputPhoneNo2" placeholder="Nama Pelajaran" name="nama_pelajaran" value="{{ $pelajaran->nama_pelajaran ?? '' }}">
+                    <h4 class="mb-4">Materi Pelajaran</h4>
+							<textarea id="mytextarea" name="materi"></textarea>
+                    </div>
+
+                    <div class="rowmb-3 ">
+                        <div class="col-xl-12 mx-auto">
+                            <h6 class="mb-0 text-uppercase">File Materi</h6>
+                            <hr/>
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <input id="image-uploadify" type="file" name="file_materi[]" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Harga</label>
-                        <div class="col-sm-9">
-                            <input type="number" class="form-control" id="inputEmailAddress2" placeholder="Harga" name="harga_pelajaran" value="{{ $pelajaran->harga_pelajaran ?? '' }}">
-                        </div>
-                    </div>
-                   
+
+                    
                     
                     <div class="row">
                         <label class="col-sm-3 col-form-label"></label>
-                        <div class="col-sm-9">
+                        <div class="col-xl-12">
                             <button type="submit" class="btn btn-info px-5">Register</button>
                         </div>
                     </div>

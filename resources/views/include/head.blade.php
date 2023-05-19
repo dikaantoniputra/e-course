@@ -23,6 +23,16 @@
     <link rel="stylesheet" href="{{ asset('') }}assets/css/semi-dark.css" />
     <link rel="stylesheet" href="{{ asset('') }}assets/css/header-colors.css" />
 
+
+	<link href="{{ asset('') }}assets/plugins/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet" />
+	<link href="{{ asset('') }}assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
+
+
+
+
+
+
+
     <!--plugins-->
     {{-- <link href="{{ asset('') }}assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
 	<link href="{{ asset('') }}assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />

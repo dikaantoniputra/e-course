@@ -45,7 +45,7 @@
             </a>
         </li>
         <li>
-            <a>
+            <a href="{{ url('materi') }}">
                 <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
                 </div>
                 <div class="menu-title">Materi</div>

@@ -26,4 +26,41 @@
 	<!--app JS-->
 	
         <!--app JS-->
+
+
+
+	<!--plugins-->
+	<script src='https://cdn.tiny.cloud/1/vdqx2klew412up5bcbpwivg1th6nrh3murc6maz8bukgos4v/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+	</script>
+
+<script src="{{ asset('') }}assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
+<script src="{{ asset('') }}assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
+<script src="{{ asset('') }}assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
+<script src="{{ asset('') }}assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+<script src="{{ asset('') }}assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
+
+
+	<script>
+		tinymce.init({
+		  selector: '#mytextarea'
+		});
+	</script>
+
+<script>
+	$('#fancy-file-upload').FancyFileUpload({
+		params: {
+			action: 'fileuploader'
+		},
+		maxfilesize: 1000000
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$('#image-uploadify').imageuploadify();
+	})
+</script>
+
+	<!--app JS-->
+
+
 	<script src="{{ asset('') }}assets/js/app.js"></script>

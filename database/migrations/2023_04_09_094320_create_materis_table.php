@@ -16,13 +16,10 @@ class CreateMaterisTable extends Migration
         Schema::create('materis', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->unsignedBigInteger('pendidikan_id');
-            $table->unsignedBigInteger('jadwal_id');
+            $table->unsignedBigInteger('pelajaran_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('image');
             $table->text('materi');
-            $table->foreign('pendidikan_id')->references('id')->on('pendidikans')->onDelete('cascade');
-            $table->foreign('jadwal_id')->references('id')->on('jadwals')->onDelete('cascade');
+            $table->foreign('pelajaran_id')->references('id')->on('pelajarans')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
