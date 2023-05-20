@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FileMateri;
 use App\Models\User;
 use App\Models\Materi;
 use App\Models\Pelajaran;
@@ -29,23 +30,23 @@ class MateriController extends Controller
             $model = 'materi';
             // $data = User::select('*');
             return Datatables::of(Materi::with(['pelajaran']))
-        // ->addIndexColumn()
-                     ->addColumn('action', function ($object) use ($model) {
-                        $text = "";
-                        $text.= '<a href="'.route($model.'.edit', [$model => $object]).'" class="btn btn-sm btn-success"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                // ->addIndexColumn()
+                ->addColumn('action', function ($object) use ($model) {
+                    $text = "";
+                    $text .= '<a href="' . route($model . '.edit', [$model => $object]) . '" class="btn btn-sm btn-success"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
                         <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
                         <path d="M16 5l3 3"></path>
                      </svg> Edit</a>';
-                        $text.= "<form class='form-horizontal' style='display: inline;' method='POST' action='".route($model.'.destroy', [$model => $object])."'><input type='hidden' name='_token' value='".csrf_token()."'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> Hapus</button></form><form>";
-                        return $text;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    $text .= "<form class='form-horizontal' style='display: inline;' method='POST' action='" . route($model . '.destroy', [$model => $object]) . "'><input type='hidden' name='_token' value='" . csrf_token() . "'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> Hapus</button></form><form>";
+                    return $text;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-       
-       return view('page.materi.view');
+
+        return view('page.materi.view');
     }
 
     /**
@@ -73,7 +74,7 @@ class MateriController extends Controller
             'materi' => 'required|max:255',
             'file_materi.*' => 'file|max:2048', // Add validation rule for each file
         ]);
-    
+
         // Buat instance model Materi dan isi dengan data dari form
         $materi = new Materi;
         $materi->pelajaran_id = $validatedData['pelajaran_id'];
@@ -81,21 +82,21 @@ class MateriController extends Controller
         $materi->materi = $validatedData['materi'];
         $materi->slug = Str::random(16);
         $materi->save();
-    
+
         // Handle file uploads
         if ($request->hasFile('file_materi')) {
             foreach ($request->file('file_materi') as $file) {
                 $nama_file = $file->getClientOriginalName();
                 $path = $file->store('file_materi');
-    
-                $fileMateri = new file_materi;
+
+                $fileMateri = new FileMateri;
                 $fileMateri->materi_id = $materi->id;
                 $fileMateri->nama_file = $nama_file;
-                $fileMateri->path = $path;
+                $fileMateri->lokasi_file = $path;
                 $fileMateri->save();
             }
         }
-    
+
         // Redirect ke halaman yang diinginkan
         return redirect()->route('pelajaran.index');
     }
