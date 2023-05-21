@@ -117,9 +117,14 @@ class MateriController extends Controller
      * @param  \App\Models\Materi  $materi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Materi $materi)
+    public function edit($id)
     {
-        //
+        $materi = Materi::select('*')->findOrFail($id);
+        $pelajaran = Pelajaran::all();
+        $fileMateri = FileMateri::where('materi_id', $materi->id)->get();
+
+        return view('page.materi.edit', compact('pelajaran', 'materi', 'fileMateri'));
+
     }
 
     /**
@@ -129,10 +134,43 @@ class MateriController extends Controller
      * @param  \App\Models\Materi  $materi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Materi $materi)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi input
+        $validatedData = $request->validate([
+            'pelajaran_id' => 'required',
+            'materi' => 'required|max:255',
+            'file_materi.*' => 'file|max:2048', // Add validation rule for each file
+        ]);
+    
+        // Cari materi berdasarkan ID
+        $materi = Materi::findOrFail($id);
+        
+        // Update data materi dengan data baru dari form
+        $materi->pelajaran_id = $validatedData['pelajaran_id'];
+        $materi->materi = $validatedData['materi'];
+        $materi->save();
+    
+        // Handle file uploads
+        if ($request->hasFile('file_materi')) {
+            foreach ($request->file('file_materi') as $file) {
+                $nama_file = $file->getClientOriginalName();
+                $path = $file->store('file_materi');
+    
+                $fileMateri = new FileMateri;
+                $fileMateri->materi_id = $materi->id;
+                $fileMateri->nama_file = $nama_file;
+                $fileMateri->lokasi_file = $path;
+                $fileMateri->save();
+            }
+        }
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('materi.index');
     }
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.
@@ -144,4 +182,30 @@ class MateriController extends Controller
     {
         //
     }
+
+    public function download($filename)
+    {
+        // Cek apakah file ada di penyimpanan
+        if (Storage::exists($filename)) {
+            $path = public_path('app/' . $filename);
+            return response()->download($path);
+        }
+
+        // Jika file tidak ditemukan, tampilkan error atau redirect ke halaman yang sesuai
+        abort(404, 'File not found');
+    }
+
+    public function delete($id)
+    {
+        // Temukan pengalaman kerja berdasarkan ID
+        $workExperience = FileMateri::findOrFail($id);
+
+        // Lakukan proses penghapusan
+        $workExperience->delete();
+
+        // Redirect atau lakukan tindakan lain setelah penghapusan berhasil
+        return redirect()->back()->with('success', 'Pengalaman kerja telah dihapus.');
+    }
+
+
 }

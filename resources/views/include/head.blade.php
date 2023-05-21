@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('') }}assets/css/dark-theme.css" />
     <link rel="stylesheet" href="{{ asset('') }}assets/css/semi-dark.css" />
     <link rel="stylesheet" href="{{ asset('') }}assets/css/header-colors.css" />
+    
 
 
 	<link href="{{ asset('') }}assets/plugins/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet" />

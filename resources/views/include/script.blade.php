@@ -40,6 +40,12 @@
 <script src="{{ asset('') }}assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
 
 
+	<script src="https://unpkg.com/feather-icons"></script>
+
+	<script>
+		feather.replace()
+	</script>
+
 	<script>
 		tinymce.init({
 		  selector: '#mytextarea'

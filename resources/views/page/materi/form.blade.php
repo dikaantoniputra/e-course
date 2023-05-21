@@ -25,25 +25,39 @@
 
                     <div class="row mb-3">
                     <h4 class="mb-4">Materi Pelajaran</h4>
-							<textarea id="mytextarea" name="materi"></textarea>
+							<textarea id="mytextarea" name="materi">{{ $materi->materi ?? '' }}</textarea>
                     </div>
 
-                    <div class="rowmb-3 ">
+                    <div class="row mb-3">
                         <div class="col-xl-12 mx-auto">
                             <h6 class="mb-0 text-uppercase">File Materi</h6>
                             <hr/>
                             <div class="card">
                                 <div class="card-body">
-                                    <form>
+                                   
                                         <input id="image-uploadify" type="file" name="file_materi[]" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
-                                    </form>
+                                        
+                                        <!-- Tampilkan data file materi -->
+                                        <div class="mt-3">
+                                            <h6>Data File Materi:</h6>
+                                            <ul>
+                                                @foreach ($fileMateri as $file)
+                                                <li>
+                                                    <a href="{{ route('download.file', ['filename' => $file->nama_file]) }}">{{ $file->nama_file }}</a>
+                                                    <button onclick="deleteFile('{{ $file->id }}')" class="border-0 bg-transparent"><i class="text-danger" data-feather="delete"></i></button>
+                                                </li>
+                                            @endforeach
+                                            
+                                            
+                                            </ul>
+                                        </div>
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     
-                    
+                                                   
                     <div class="row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-xl-12">

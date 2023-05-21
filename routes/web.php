@@ -56,6 +56,11 @@ Route::resource('pelajaran', PelajaranController::class);
 Route::get('/materi', [MateriController::class, 'index'])->name('materi.index');
 Route::resource('materi', MateriController::class);
 
+Route::get('/download-file/{filename}',[MateriController::class, 'download'])->name('download.file');
+Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
+
+
+
 Route::get('/pendidikan', [PendidikanController::class, 'index'])->name('pendidikan.index');
 Route::resource('pendidikan', PendidikanController::class);
 
