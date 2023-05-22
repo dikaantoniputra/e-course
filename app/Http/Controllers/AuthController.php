@@ -35,7 +35,7 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
 
             }elseif (Auth::user()->role === 'tentor') {
-                return redirect()->route('daerah.dashboard');
+                return redirect()->route('tentor.dashboard');
 
             } else {
                 return redirect()->intended('/');
@@ -50,6 +50,6 @@ class AuthController extends Controller
         {
             Auth::logout();
 
-            return redirect('/login');
+            return redirect('/');
         }
 }

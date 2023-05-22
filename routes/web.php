@@ -26,6 +26,7 @@ use App\Http\Middleware\CheckRole;
 
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 
 
@@ -66,5 +67,26 @@ Route::resource('pendidikan', PendidikanController::class);
 
 Route::get('/kelase', [KelasController::class, 'index'])->name('kelase.index');
 Route::resource('kelase', KelasController::class);
+
+});
+
+
+
+Route::group(['middleware' => ['auth', 'role:tentor']], function () {
+    Route::get('/', function () {
+        return view('page.index');
+    })->name('tentor.dashboard');
+
+
+
+Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
+Route::resource('pelajaran', PelajaranController::class);
+
+
+Route::get('/materi-tentor', [MateriController::class, 'tentor'])->name('materi.tentor');
+Route::resource('materi', MateriController::class);
+
+Route::get('/download-file/{filename}',[MateriController::class, 'download'])->name('download.file');
+Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
 
 });

@@ -41,12 +41,25 @@
                                         <div class="mt-3">
                                             <h6>Data File Materi:</h6>
                                             <ul>
-                                                @foreach ($fileMateri as $file)
+                                                {{-- @foreach ($fileMateri as $file)
                                                 <li>
                                                     <a href="{{ route('download.file', ['filename' => $file->nama_file]) }}">{{ $file->nama_file }}</a>
                                                     <button onclick="deleteFile('{{ $file->id }}')" class="border-0 bg-transparent"><i class="text-danger" data-feather="delete"></i></button>
                                                 </li>
-                                            @endforeach
+                                            @endforeach --}}
+                                            @if (isset($fileMateri) && !$fileMateri->isEmpty())
+                                                <ul>
+                                                    @foreach ($fileMateri as $file)
+                                                        <li>
+                                                            <a href="{{ route('download.file', ['filename' => $file->nama_file]) }}">{{ $file->nama_file }}</a>
+                                                            <button onclick="deleteFile('{{ $file->id }}')" class="border-0 bg-transparent"><i class="text-danger" data-feather="delete"></i></button>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <p>Tidak ada file yang tersedia.</p>
+                                            @endif
+
                                             
                                             
                                             </ul>
