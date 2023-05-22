@@ -178,10 +178,27 @@ class MateriController extends Controller
      * @param  \App\Models\Materi  $materi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materi $materi)
+    public function destroy($id)
     {
-        //
+        // Cari materi berdasarkan ID
+        $materi = Materi::findOrFail($id);
+        
+        // Hapus file-file terkait dengan materi
+        foreach ($materi->fileMateris as $fileMateri) {
+            // Hapus file dari penyimpanan
+            Storage::delete($fileMateri->lokasi_file);
+            
+            // Hapus entri file dari database
+            $fileMateri->delete();
+        }
+        
+        // Hapus materi dari database
+        $materi->delete();
+    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('materi.index');
     }
+    
 
     public function download($filename)
     {
