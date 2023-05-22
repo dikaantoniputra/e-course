@@ -32,7 +32,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/', function () {
+    Route::get('/admin', function () {
         return view('page.index');
     })->name('admin.dashboard');
 

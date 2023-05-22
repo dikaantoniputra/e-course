@@ -130,8 +130,11 @@ class MateriController extends Controller
             }
         }
 
-        // Redirect ke halaman yang diinginkan
-        return redirect()->route('materi.index');
+        if (Auth::user()->role === 'tentor') {
+            return redirect()->route('materi.tentor');
+        } else {
+            return redirect()->route('materi.index');
+        }
     }
     /**
      * Display the specified resource.

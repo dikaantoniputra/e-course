@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('siswa.index');
 
             }elseif (Auth::user()->role === 'tentor') {
                 return redirect()->route('tentor.dashboard');
