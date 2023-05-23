@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Tentor::class);
     }
+
+    public function pelajaran()
+    {
+        return $this->hasMany(Pelajaran::class);
+    }
 }

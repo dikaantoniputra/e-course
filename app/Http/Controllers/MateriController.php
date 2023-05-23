@@ -30,20 +30,20 @@ class MateriController extends Controller
             $model = 'materi';
             // $data = User::select('*');
             return Datatables::of(Materi::with(['pelajaran']))
-            
+
                 // ->addIndexColumn()
                 ->addColumn('action', function ($object) use ($model) {
-                    $text = "";
-                    $text .= '<a href="' . route($model . '.edit', [$model => $object]) . '" class="btn btn-sm btn-success"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                        <path d="M16 5l3 3"></path>
-                     </svg> Edit</a>';
-                    $text .= "<form class='form-horizontal' style='display: inline;' method='POST' action='" . route($model . '.destroy', [$model => $object]) . "'><input type='hidden' name='_token' value='" . csrf_token() . "'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> Hapus</button></form><form>";
-                    return $text;
+                    // $text = "";
+                    // $text .= '<a href="' . route($model . '.edit', [$model => $object]) . '" class="btn btn-sm btn-success"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    //     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    //     <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                    //     <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                    //     <path d="M16 5l3 3"></path>
+                    //  </svg> Edit</a>';
+                    // $text .= "<form class='form-horizontal' style='display: inline;' method='POST' action='" . route($model . '.destroy', [$model => $object]) . "'><input type='hidden' name='_token' value='" . csrf_token() . "'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> Hapus</button></form><form>";
+                    // return $text;
                 })
-                ->rawColumns(['action'])
+                // ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -57,10 +57,11 @@ class MateriController extends Controller
             $user = $request->user();
             $tentor = $user->id;
             // $data = User::select('*');
-            return Datatables::of(Materi::with(['pelajaran'])
-            ->where('user_id', $tentor)
+            return Datatables::of(
+                Materi::with(['pelajaran'])
+                    ->where('user_id', $tentor)
             )
-            
+
                 // ->addIndexColumn()
                 ->addColumn('action', function ($object) use ($model) {
                     $text = "";
@@ -80,7 +81,7 @@ class MateriController extends Controller
         return view('page.materi.tentor');
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -90,7 +91,8 @@ class MateriController extends Controller
     public function create()
     {
         //
-        $pelajaran = Pelajaran::all();
+        $auth_user = Auth::user();
+        $pelajaran = Pelajaran::where('user_id', $auth_user->id)->get();
         return view('page.materi.create', compact('pelajaran'));
     }
     /**
@@ -162,12 +164,12 @@ class MateriController extends Controller
      */
     public function edit($id)
     {
+        $auth_user = Auth::user();
         $materi = Materi::select('*')->findOrFail($id);
-        $pelajaran = Pelajaran::all();
+        $pelajaran = Pelajaran::where('user_id', $auth_user->id)->get();
         $fileMateri = FileMateri::where('materi_id', $materi->id)->get();
 
         return view('page.materi.edit', compact('pelajaran', 'materi', 'fileMateri'));
-
     }
 
     /**
@@ -183,23 +185,23 @@ class MateriController extends Controller
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
             'materi' => 'required|max:255',
-            'file_materi.*' => 'file|max:2048', // Add validation rule for each file
+            // 'file_materi.*' => 'file|max:2048', // Add validation rule for each file
         ]);
-    
+
         // Cari materi berdasarkan ID
         $materi = Materi::findOrFail($id);
-        
+
         // Update data materi dengan data baru dari form
         $materi->pelajaran_id = $validatedData['pelajaran_id'];
         $materi->materi = $validatedData['materi'];
         $materi->save();
-    
+
         // Handle file uploads
         if ($request->hasFile('file_materi')) {
             foreach ($request->file('file_materi') as $file) {
                 $nama_file = $file->getClientOriginalName();
                 $path = $file->store('file_materi');
-    
+
                 $fileMateri = new FileMateri;
                 $fileMateri->materi_id = $materi->id;
                 $fileMateri->nama_file = $nama_file;
@@ -207,13 +209,13 @@ class MateriController extends Controller
                 $fileMateri->save();
             }
         }
-    
+
         // Redirect ke halaman yang diinginkan
-        return redirect()->route('materi.index');
+        return redirect()->route('materi.tentor');
     }
-    
-    
-    
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -225,23 +227,23 @@ class MateriController extends Controller
     {
         // Cari materi berdasarkan ID
         $materi = Materi::findOrFail($id);
-        
+
         // Hapus file-file terkait dengan materi
         foreach ($materi->fileMateris as $fileMateri) {
             // Hapus file dari penyimpanan
             Storage::delete($fileMateri->lokasi_file);
-            
+
             // Hapus entri file dari database
             $fileMateri->delete();
         }
-        
+
         // Hapus materi dari database
         $materi->delete();
-    
+
         // Redirect ke halaman yang diinginkan
         return redirect()->route('materi.index');
     }
-    
+
 
     public function download($filename)
     {
@@ -266,6 +268,4 @@ class MateriController extends Controller
         // Redirect atau lakukan tindakan lain setelah penghapusan berhasil
         return redirect()->back()->with('success', 'Pengalaman kerja telah dihapus.');
     }
-
-
 }
