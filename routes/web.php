@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
         return view('page.index');
     })->name('tentor.dashboard');
 
-<<<<<<< HEAD
+
 Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
 Route::resource('pelajaran', PelajaranController::class);
 
@@ -80,25 +80,4 @@ Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.del
 
 });
 
-Route::group(['middleware' => ['auth', 'role:siswa']], function () {
-    Route::get('/siswa', function () {
-        return view('page.index');
-    })->name('siswa.dashboard');
 
-
-Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
-
-
-
-});
-=======
-    Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
-    Route::resource('pelajaran', PelajaranController::class);
-});
-
-Route::group(['middleware' => ['auth', 'role:tentor,admin']], function () {
-    Route::get('/materi', [MateriController::class, 'index'])->name('materi.index');
-    Route::get('/materi/tentor', [MateriController::class, 'tentor'])->name('materi.tentor');
-    Route::resource('materi', MateriController::class);
-});
->>>>>>> 2d9be8d35c4ca71209b65264a5fc5be3311597d9
