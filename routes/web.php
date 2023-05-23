@@ -78,6 +78,8 @@ Route::resource('materi', MateriController::class);
 Route::get('/download-file/{filename}',[MateriController::class, 'download'])->name('download.file');
 Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
 
-});
+Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
+Route::get('/detailpelajaran/{slug}', [PelajaranController::class, 'show'])->name('pelajaran');
 
+});
 

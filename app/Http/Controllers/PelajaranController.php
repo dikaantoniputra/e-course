@@ -120,9 +120,10 @@ class PelajaranController extends Controller
      * @param  \App\Models\Pelajaran  $pelajaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Pelajaran $pelajaran)
+    public function show($slug)
     {
-        //
+        $pelajaran = Pelajaran::where('slug', $slug)->firstOrFail();
+        return view('page.detailpelajaran', compact('pelajaran'));
     }
 
     /**
@@ -195,9 +196,9 @@ class PelajaranController extends Controller
 
     public function allpelajaran()
     {
-        $materi = Materi::all();
+        $pelajaran = Pelajaran::all();
 
-        return view('page.allpelajaran',compact('materi'));
+        return view('page.allpelajaran',compact('pelajaran'));
     }
 
 
