@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Materi;
 use App\Models\Pelajaran;
 use App\Models\Pendidikan;
 use Illuminate\Support\Str;
@@ -164,4 +165,14 @@ class PelajaranController extends Controller
         // Redirect ke halaman yang diinginkan
         return redirect()->route('pelajaran.index');
     }
+
+    public function allpelajaran()
+    {
+        $materi = Materi::all();
+
+        return view('page.allpelajaran',compact('materi'));
+    }
+
+
+
 }

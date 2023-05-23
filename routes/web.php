@@ -77,8 +77,6 @@ Route::group(['middleware' => ['auth', 'role:tentor']], function () {
         return view('page.index');
     })->name('tentor.dashboard');
 
-
-
 Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
 Route::resource('pelajaran', PelajaranController::class);
 
@@ -88,5 +86,17 @@ Route::resource('materi', MateriController::class);
 
 Route::get('/download-file/{filename}',[MateriController::class, 'download'])->name('download.file');
 Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
+
+});
+
+Route::group(['middleware' => ['auth', 'role:siswa']], function () {
+    Route::get('/siswa', function () {
+        return view('page.index');
+    })->name('siswa.dashboard');
+
+
+Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
+
+
 
 });

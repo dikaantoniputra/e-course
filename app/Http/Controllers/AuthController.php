@@ -38,7 +38,7 @@ class AuthController extends Controller
                 return redirect()->route('tentor.dashboard');
 
             } else {
-                return redirect()->intended('/');
+                return redirect()->intended('/siswa');
             }
         }
 
