@@ -123,6 +123,8 @@ class PelajaranController extends Controller
      */
     public function show($slug)
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
         $pelajaran = Pelajaran::where('slug', $slug)->firstOrFail();
     
         // Mengambil data materi berdasarkan ID pelajaran
@@ -132,7 +134,7 @@ class PelajaranController extends Controller
         $file = FileMateri::whereIn('materi_id', $materi->pluck('id'))->get();
     
         // Meneruskan variabel $materi ke view
-        return view('page.detailpelajaran', compact('pelajaran', 'materi', 'file'));
+        return view('page.detailpelajaran', compact('pelajaran', 'materi', 'file','user'));
     }
 
     /**

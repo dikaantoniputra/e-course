@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\AuthController;
@@ -8,8 +9,8 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendidikanController;
-use App\Http\Middleware\CheckRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,8 @@ Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.del
 
 Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
 Route::get('/detailpelajaran/{slug}', [PelajaranController::class, 'show'])->name('pelajaran');
+
+Route::resource('pembayaran', TransaksiController::class);
 
 });
 

@@ -55,7 +55,9 @@
                   <hr>
                  
                 <div class="d-flex gap-3 mt-3">
-                    <a href="#" class="btn btn-primary">Buy Now</a>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Bayar Langsung
+                  </button>
                     {{-- <a href="#" class="btn btn-outline-primary"><span class="text">Add to cart</span> <i class='bx bxs-cart-alt'></i></a> --}}
                 </div>
                 </div>
@@ -137,4 +139,5 @@
           </div>
 
 
+          @include('page.pembayaran')
 @endsection
