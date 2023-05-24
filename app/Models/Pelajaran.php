@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Materi;
+use App\Models\Pendidikan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelajaran extends Model
 {
@@ -22,4 +25,10 @@ class Pelajaran extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function materi()
+    {
+        return $this->belongsTo(Materi::class);
+    }
+
 }

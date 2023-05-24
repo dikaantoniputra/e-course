@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Materi;
 use App\Models\Pelajaran;
+use App\Models\FileMateri;
 use App\Models\Pendidikan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class PelajaranController extends Controller
@@ -123,7 +124,15 @@ class PelajaranController extends Controller
     public function show($slug)
     {
         $pelajaran = Pelajaran::where('slug', $slug)->firstOrFail();
-        return view('page.detailpelajaran', compact('pelajaran'));
+    
+        // Mengambil data materi berdasarkan ID pelajaran
+        $materi = Materi::where('pelajaran_id', $pelajaran->id)->get();
+    
+        // Mengambil file berdasarkan ID materi
+        $file = FileMateri::whereIn('materi_id', $materi->pluck('id'))->get();
+    
+        // Meneruskan variabel $materi ke view
+        return view('page.detailpelajaran', compact('pelajaran', 'materi', 'file'));
     }
 
     /**
