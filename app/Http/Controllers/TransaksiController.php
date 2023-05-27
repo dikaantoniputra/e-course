@@ -21,6 +21,20 @@ class TransaksiController extends Controller
         //
     }
 
+    public function user()
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+        if ($user->role === 'admin') {
+            $transaksi = Transaksi::all(); // Retrieve all transactions
+        } elseif ($user->role === 'siswa') {
+            $transaksi = Transaksi::where('user_id', $user->id)->get(); // Retrieve transactions based on user_id
+        }
+        
+        return view('page.transaksi', compact('transaksi'));
+        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +59,7 @@ class TransaksiController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
-            'bukti_pembayaran.*' => 'file|max:2048', // Add validation rule for each file
+            'bukti_pembayaran' => 'file|max:2048', // Add validation rule for each file
         ]);
     
         // Mendapatkan pengguna yang sedang login
@@ -60,17 +74,13 @@ class TransaksiController extends Controller
         $transaksi->tanggal_pembayaran = $tanggalHariIni;
     
         if ($request->hasFile('bukti_pembayaran')) {
-            $files = $request->file('bukti_pembayaran');
-            $filePaths = [];
-    
-            foreach ($files as $file) {
-                $fileName = $file->getClientOriginalName();
-                $filePath = $file->store('bukti_pembayaran');
-                $filePaths[] = $filePath;
-            }
-    
-            $transaksi->bukti_pembayaran = $filePaths;
+            $file = $request->file('bukti_pembayaran');
+            $fileName = $file->getClientOriginalName();
+            $filePath = $file->store('bukti_pembayaran');
+        
+            $transaksi->bukti_pembayaran = $filePath;
         }
+        
     
         // Simpan ke database
         $transaksi->save();
@@ -109,10 +119,19 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaksi $transaksi)
+    
+
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the request data if needed
+        
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status_transaksi = $request->input('status_transaksi');
+        $transaksi->save();
+        
+        return redirect()->back()->with('success', 'Transaction status updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -120,8 +139,16 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaksi $transaksi)
-    {
-        //
-    }
+
+    public function destroy($id)
+{
+    $transaksi = Transaksi::findOrFail($id);
+    
+    // Perform any necessary validations or checks before deleting the transaction
+    
+    $transaksi->delete();
+    
+    return redirect()->route('transaksi.index')->with('success', 'Transaction deleted successfully');
+}
+
 }

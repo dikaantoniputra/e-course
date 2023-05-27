@@ -68,7 +68,7 @@
                             </div>
                             <div class="mb-3">
                               <label for="inputProductDescription" class="form-label">Uplod Bukti Pembayaran</label>
-                              <input id="image-uploadify" type="file" name="bukti_pembayaran" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
+                              <input  type="file" name="bukti_pembayaran" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" >
                             </div>
                           </div>
                          </div>

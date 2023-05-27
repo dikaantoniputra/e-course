@@ -55,9 +55,18 @@
                   <hr>
                  
                 <div class="d-flex gap-3 mt-3">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Bayar Langsung
-                  </button>
+                    
+                    @if ($transaksi && $transaksi->status_transaksi !== 'success')
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Bayar Langsung
+                        </button>
+                    @elseif (!$transaksi)
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Bayar Langsung
+                        </button>
+                    @endif
+
+                
                     {{-- <a href="#" class="btn btn-outline-primary"><span class="text">Add to cart</span> <i class='bx bxs-cart-alt'></i></a> --}}
                 </div>
                 </div>

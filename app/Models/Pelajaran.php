@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Materi;
+use App\Models\Transaksi;
 use App\Models\Pendidikan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,4 +32,8 @@ class Pelajaran extends Model
         return $this->belongsTo(Materi::class);
     }
 
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

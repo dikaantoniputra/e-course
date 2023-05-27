@@ -82,7 +82,13 @@ Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.del
 Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
 Route::get('/detailpelajaran/{slug}', [PelajaranController::class, 'show'])->name('pelajaran');
 
+Route::get('/pelajaransaya', [PelajaranController::class, 'pelajaransiswa'])->name('pelajaransiswa');
+
 Route::resource('pembayaran', TransaksiController::class);
+
+Route::get('/transaksi', [TransaksiController::class, 'user'])->name('transaksi.index');
+
+
 
 });
 

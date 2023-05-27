@@ -83,7 +83,7 @@
             <li class="menu-label">Mater Umum</li>
 
             <li>
-                <a class="has-arrow" href="javascript:;">
+                <a href="{{ url('transaksi') }}">
                     <div class="parent-icon"><i class="bx bx-lock"></i>
                     </div>
                     <div class="menu-title">Transaksi</div>
@@ -178,7 +178,7 @@
         <li class="menu-label">Master Kelas</li>
       
         <li>
-            <a href="javascript:;">
+            <a href="{{ url('pelajaransaya') }}">
                 <div class="parent-icon"><i class="bx bx-grid-alt"></i>
                 </div>
                 <div class="menu-title">Pelajaran Siswa</div>
@@ -197,7 +197,7 @@
         <li class="menu-label">Mater Umum</li>
        
         <li>
-            <a class="has-arrow" href="javascript:;">
+            <a  href="{{ url('transaksi') }}">
                 <div class="parent-icon"><i class="bx bx-lock"></i>
                 </div>
                 <div class="menu-title">Transaksi</div>
