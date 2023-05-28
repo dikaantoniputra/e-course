@@ -83,7 +83,7 @@
             <li class="menu-label">Mater Umum</li>
 
             <li>
-                <a class="has-arrow" href="javascript:;">
+                <a href="{{ url('transaksi') }}">
                     <div class="parent-icon"><i class="bx bx-lock"></i>
                     </div>
                     <div class="menu-title">Transaksi</div>
@@ -150,6 +150,63 @@
 
 
         </ul>
+    @endif
+
+    @if (auth()->user()->role == 'siswa')
+    <ul class="metismenu" id="menu">
+        <li>
+            <a href="{{ url('/') }}">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Dashboard</div>
+            </a>
+
+        </li>
+     
+        
+        <li class="menu-label">Master Pelajaran</li>
+       
+        <li>
+            <a href="{{ url('allpelajaran') }}">
+                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                </div>
+                <div class="menu-title">Menu Pelajaran</div>
+            </a>
+        </li>
+
+
+        <li class="menu-label">Master Kelas</li>
+      
+        <li>
+            <a href="{{ url('pelajaransaya') }}">
+                <div class="parent-icon"><i class="bx bx-grid-alt"></i>
+                </div>
+                <div class="menu-title">Pelajaran Siswa</div>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-grid-alt"></i>
+                </div>
+                <div class="menu-title">Jadwal</div>
+            </a>
+        </li>
+
+
+        <li class="menu-label">Mater Umum</li>
+       
+        <li>
+            <a  href="{{ url('transaksi') }}">
+                <div class="parent-icon"><i class="bx bx-lock"></i>
+                </div>
+                <div class="menu-title">Transaksi</div>
+            </a>
+
+        </li>
+
+
+    </ul>
     @endif
     <!--end navigation-->
 </div>

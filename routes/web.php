@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\AuthController;
@@ -8,9 +9,8 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendidikanController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Middleware\CheckRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,12 +71,23 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
         return view('page.index');
     })->name('tentor.dashboard');
 
+
     Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
     Route::resource('pelajaran', PelajaranController::class);
-});
 
-Route::group(['middleware' => ['auth', 'role:tentor,admin']], function () {
-    Route::get('/materi', [MateriController::class, 'index'])->name('materi.index');
-    Route::get('/materi/tentor', [MateriController::class, 'tentor'])->name('materi.tentor');
+
+    Route::get('/materi-tentor', [MateriController::class, 'tentor'])->name('materi.tentor');
     Route::resource('materi', MateriController::class);
+
+    Route::get('/download-file/{filename}', [MateriController::class, 'download'])->name('download.file');
+    Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
+
+    Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
+    Route::get('/detailpelajaran/{slug}', [PelajaranController::class, 'show'])->name('pelajaran');
+
+    Route::get('/pelajaransaya', [PelajaranController::class, 'pelajaransiswa'])->name('pelajaransiswa');
+
+    Route::resource('pembayaran', TransaksiController::class);
+
+    Route::get('/transaksi', [TransaksiController::class, 'user'])->name('transaksi.index');
 });

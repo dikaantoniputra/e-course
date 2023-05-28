@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Materi;
 use App\Models\Pelajaran;
+use App\Models\Transaksi;
+use App\Models\FileMateri;
 use App\Models\Pendidikan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class PelajaranController extends Controller
@@ -119,10 +122,27 @@ class PelajaranController extends Controller
      * @param  \App\Models\Pelajaran  $pelajaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Pelajaran $pelajaran)
-    {
-        //
-    }
+    public function show($slug)
+{
+    $user = Auth::user(); // Get the currently logged-in user
+
+    $pelajaran = Pelajaran::where('slug', $slug)->firstOrFail();
+
+    // Mengambil data materi berdasarkan ID pelajaran
+    $materi = Materi::where('pelajaran_id', $pelajaran->id)->get();
+
+    // Mengambil file berdasarkan ID materi
+    $file = FileMateri::whereIn('materi_id', $materi->pluck('id'))->get();
+
+    // Get transaksi based on pelajaran and user_id
+    $transaksi = Transaksi::where('pelajaran_id', $pelajaran->id)
+        ->where('user_id', $user->id)
+        ->first();
+
+    // Meneruskan variabel $materi, $file, $user, dan $transaksi ke view
+    return view('page.detailpelajaran', compact('pelajaran', 'materi', 'file', 'user', 'transaksi'));
+}
+
 
     /**
      * Show the form for editing the specified resource.
@@ -191,4 +211,34 @@ class PelajaranController extends Controller
         // Redirect ke halaman yang diinginkan
         return redirect()->route('pelajaran.index');
     }
+
+    public function allpelajaran()
+    {
+        $user = auth()->user(); // Assuming you are using Laravel's authentication system and the logged-in user is available through the 'auth' helper function.
+    
+        $pelajaran = Pelajaran::whereDoesntHave('transaksi', function ($query) use ($user) {
+            $query->where('status_transaksi', 'success')
+                  ->where('user_id', $user->id);
+        })->get();
+    
+        return view('page.allpelajaran', compact('pelajaran'));
+    }
+    
+    public function pelajaransiswa()
+    {
+        $user = auth()->user(); // Assuming you are using Laravel's authentication system and the logged-in user is available through the 'auth' helper function.
+    
+        $pelajaran = Pelajaran::whereHas('transaksi', function ($query) use ($user) {
+            $query->where('status_transaksi', 'success')
+                  ->where('user_id', $user->id);
+        })->get();
+    
+        return view('page.pelajaransaya', compact('pelajaran'));
+    }
+    
+
+
+
+
+
 }

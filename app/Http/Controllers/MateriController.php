@@ -106,7 +106,7 @@ class MateriController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
-            'materi' => 'required|max:255',
+            'materi' => 'required',
             'file_materi.*' => 'file|max:2048', // Add validation rule for each file
         ]);
 
@@ -184,7 +184,7 @@ class MateriController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
-            'materi' => 'required|max:255',
+            'materi' => 'required',
             // 'file_materi.*' => 'file|max:2048', // Add validation rule for each file
         ]);
 
