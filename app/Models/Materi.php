@@ -23,12 +23,11 @@ class Materi extends Model
 
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function fileMateris()
     {
         return $this->hasMany(FileMateri::class);
     }
-
 }

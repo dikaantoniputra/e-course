@@ -13,7 +13,7 @@
                     <hr />
 
                     <div class="row mb-3">
-                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Kategori Pelajaran</label>
+                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Kategori Pendidikan</label>
                         <div class="col-sm-9">
                             <select class="form-select" id="role" name="pendidikan_id">
                                 @foreach ($pendidikan as $r)

@@ -62,28 +62,28 @@ class KelasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    // Validasi input
-    $validatedData = $request->validate([
-        'pendidikan_id' => 'required',
-        'nama_kelas' => 'required|max:255',
-    ]);
+    {
+        // Validasi input
+        $validatedData = $request->validate([
+            'pendidikan_id' => 'required',
+            'nama_kelas' => 'required|max:255',
+        ]);
 
-    // Buat instance model Kelas dan isi dengan data dari form
-    $kelas = new Kelase;
-    $kelas->pendidikan_id = $validatedData['pendidikan_id'];
-    $kelas->nama_kelas = $validatedData['nama_kelas'];
+        // Buat instance model Kelas dan isi dengan data dari form
+        $kelas = new Kelase;
+        $kelas->pendidikan_id = $validatedData['pendidikan_id'];
+        $kelas->nama_kelas = $validatedData['nama_kelas'];
 
-    // Buat slug acak sepanjang 16 karakter
-    $slug = Str::random(16);
-    $kelas->slug = $slug;
+        // Buat slug acak sepanjang 16 karakter
+        $slug = Str::random(16);
+        $kelas->slug = $slug;
 
-    // Simpan ke database
-    $kelas->save();
+        // Simpan ke database
+        $kelas->save();
 
-    // Redirect ke halaman yang diinginkan
-    return redirect()->route('kelase.index');
-}
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('kelase.index');
+    }
 
 
     /**
@@ -92,7 +92,7 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kelas)
+    public function show()
     {
         //
     }
@@ -107,7 +107,7 @@ class KelasController extends Controller
     {
         $kelas = Kelase::select('*')->findOrFail($id);
         $pendidikan = Pendidikan::all();
-        return view('page.kelas.edit', compact('pendidikan','kelas'));
+        return view('page.kelas.edit', compact('pendidikan', 'kelas'));
     }
 
     /**
@@ -118,43 +118,43 @@ class KelasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-{
-    // Validasi input
-    $validatedData = $request->validate([
-        'pendidikan_id' => 'required',
-        'nama_kelas' => 'required|max:255',
-    ]);
+    {
+        // Validasi input
+        $validatedData = $request->validate([
+            'pendidikan_id' => 'required',
+            'nama_kelas' => 'required|max:255',
+        ]);
 
-    // Buat instance model Kelas dan isi dengan data dari form
-    $kelas = Kelase::findOrFail($id);
-    $kelas->pendidikan_id = $validatedData['pendidikan_id'];
-    $kelas->nama_kelas = $validatedData['nama_kelas'];
+        // Buat instance model Kelas dan isi dengan data dari form
+        $kelas = Kelase::findOrFail($id);
+        $kelas->pendidikan_id = $validatedData['pendidikan_id'];
+        $kelas->nama_kelas = $validatedData['nama_kelas'];
 
-    // Buat slug acak sepanjang 16 karakter
-    $slug = Str::random(16);
-    $kelas->slug = $slug;
+        // Buat slug acak sepanjang 16 karakter
+        $slug = Str::random(16);
+        $kelas->slug = $slug;
 
-    // Simpan ke database
-    $kelas->save();
+        // Simpan ke database
+        $kelas->save();
 
-    // Redirect ke halaman yang diinginkan
-    return redirect()->route('kelase.index');
-}
-    
+        // Redirect ke halaman yang diinginkan
+        return redirect()->route('kelase.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-   public function destroy($id)
+    public function destroy($id)
     {
         // Cari model Pendidikan berdasarkan id
         $kelas = Kelase::findOrFail($id);
-    
+
         // Hapus model dari database
         $kelas->delete();
-    
+
         // Redirect ke halaman yang diinginkan
         return redirect()->route('kelase.index');
     }

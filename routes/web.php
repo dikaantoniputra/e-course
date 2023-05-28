@@ -11,6 +11,7 @@ use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\JadwalController;
 
 /*
 |--------------------------------------------------------------------------

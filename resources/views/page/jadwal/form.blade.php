@@ -39,10 +39,30 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Nama Kelas</label>
+                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Hari Pembelajaran</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputEnterYourName"
-                                placeholder="Enter Your Kelas" name="nama_kelas" value="{{ $kelas->nama_kelas ?? '' }}">
+                            <select class="form-select" id="role" name="hari">
+                                @foreach ($days as $day)
+                                    <option value="{{ $day }}"
+                                        {{ !empty($jadwal) && $jadwal->hari == $day ? 'selected' : (old('hari') == $day ? 'selected' : '') }}>
+                                        {{ $day }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Jam Mulai</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" id="inputEnterYourName"
+                                name="jam_mulai" value="{{ !empty($jadwal) ? $jadwal->jam_mulai : '' }}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Jam Akhir</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" id="inputEnterYourName"
+                                name="jam_akhir" value="{{ !empty($jadwal) ? $jadwal->jam_akhir : '' }}">
                         </div>
                     </div>
 
