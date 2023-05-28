@@ -18,7 +18,7 @@ class CreateJadwalsTable extends Migration
             $table->string('slug')->unique();
             $table->unsignedBigInteger('pelajaran_id');
             $table->unsignedBigInteger('user_id');
-            $table->date('hari');
+            $table->string('hari');
             $table->time('jam_mulai');
             $table->time('jam_akhir');
             $table->foreign('pelajaran_id')->references('id')->on('pelajarans')->onDelete('cascade');

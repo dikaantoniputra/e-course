@@ -1,0 +1,53 @@
+[
+    {
+        "name": "Mentor 1",
+        "email": "mentor1@gmail.com",
+        "password": "mentor",
+        "address": "Mentor Address",
+        "phone": "081234567890",
+        "username": "mentor1",
+        "role": "tentor",
+        "status": 0
+    },
+    {
+        "name": "Mentor 2",
+        "email": "mentor2@gmail.com",
+        "password": "mentor",
+        "address": "Mentor Address",
+        "phone": "081234567891",
+        "username": "mentor2",
+        "role": "tentor",
+        "status": 0
+    },
+    {
+        "name": "Siswa 1",
+        "email": "siswa1@gmail.com",
+        "password": "siswa",
+        "address": "Siswa Address",
+        "phone": "081234567892",
+        "username": "siswa1",
+        "role": "siswa",
+        "status": 0
+    },
+    {
+        "name": "Siswa 2",
+        "email": "siswa2@gmail.com",
+        "password": "siswa",
+        "address": "Siswa Address",
+        "phone": "081234567893",
+        "username": "siswa2",
+        "role": "siswa",
+        "status": 0
+    },
+    {
+        "name": "Admin",
+        "email": "admin@gmail.com",
+        "password": "admin",
+        "slug": "admin",
+        "address": "Admin Address",
+        "phone": "1234567890",
+        "username": "admin",
+        "role": "admin",
+        "status": 1
+    }
+]

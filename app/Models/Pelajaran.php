@@ -22,4 +22,9 @@ class Pelajaran extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function jadwal()
+    {
+        return $this->hasOne(Jadwal::class);
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Middleware\CheckRole;
 
 /*
@@ -58,6 +59,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/kelase', [KelasController::class, 'index'])->name('kelase.index');
     Route::resource('kelase', KelasController::class);
+
+    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+    Route::resource('jadwal', JadwalController::class);
 });
 
 
