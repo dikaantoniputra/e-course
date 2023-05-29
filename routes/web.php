@@ -60,9 +60,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/kelase', [KelasController::class, 'index'])->name('kelase.index');
     Route::resource('kelase', KelasController::class);
-
-    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
-    Route::resource('jadwal', JadwalController::class);
 });
 
 
@@ -91,4 +88,8 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
     Route::resource('pembayaran', TransaksiController::class);
 
     Route::get('/transaksi', [TransaksiController::class, 'user'])->name('transaksi.index');
+
+    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+    Route::resource('jadwal', JadwalController::class);
+    Route::post('/jadwal/detail-siswa', [JadwalController::class, 'detailSiswa'])->name('jadwal.detail-siswa');
 });

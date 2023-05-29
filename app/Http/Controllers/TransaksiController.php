@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DetailJadwal;
+use App\Models\Jadwal;
 
 class TransaksiController extends Controller
 {
@@ -29,9 +31,8 @@ class TransaksiController extends Controller
         } elseif ($user->role === 'siswa') {
             $transaksi = Transaksi::where('user_id', $user->id)->get(); // Retrieve transactions based on user_id
         }
-        
+
         return view('page.transaksi', compact('transaksi'));
-        
     }
 
 
@@ -55,16 +56,16 @@ class TransaksiController extends Controller
     {
         // Mendapatkan tanggal hari ini
         $tanggalHariIni = Carbon::now()->toDateString();
-    
+
         // Validasi input
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
             'bukti_pembayaran' => 'file|max:2048', // Add validation rule for each file
         ]);
-    
+
         // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
-    
+
         // Buat instance model Transaksi dan isi dengan data dari form
         $transaksi = new Transaksi;
         $transaksi->pelajaran_id = $validatedData['pelajaran_id'];
@@ -72,23 +73,23 @@ class TransaksiController extends Controller
         $transaksi->slug = Str::random(16);
         $transaksi->tanggal_pembelian = $tanggalHariIni;
         $transaksi->tanggal_pembayaran = $tanggalHariIni;
-    
+
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
             $fileName = $file->getClientOriginalName();
             $filePath = $file->store('bukti_pembayaran');
-        
+
             $transaksi->bukti_pembayaran = $filePath;
         }
-        
-    
+
+
         // Simpan ke database
         $transaksi->save();
-    
+
         // Redirect ke halaman yang diinginkan
         return redirect()->route('allpelajaran');
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -119,16 +120,21 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function update(Request $request, $id)
     {
         // Validate the request data if needed
-        
+
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status_transaksi = $request->input('status_transaksi');
         $transaksi->save();
-        
+        $detail_jadwal = new DetailJadwal;
+        $jadwal = Jadwal::where('pelajaran_id', $transaksi->pelajaran->id)->first();
+        $detail_jadwal->jadwal_id = $jadwal->id;
+        $detail_jadwal->user_id = $transaksi->user->id;
+        $detail_jadwal->save();
+
         return redirect()->back()->with('success', 'Transaction status updated successfully');
     }
 
@@ -141,14 +147,13 @@ class TransaksiController extends Controller
      */
 
     public function destroy($id)
-{
-    $transaksi = Transaksi::findOrFail($id);
-    
-    // Perform any necessary validations or checks before deleting the transaction
-    
-    $transaksi->delete();
-    
-    return redirect()->route('transaksi.index')->with('success', 'Transaction deleted successfully');
-}
+    {
+        $transaksi = Transaksi::findOrFail($id);
 
+        // Perform any necessary validations or checks before deleting the transaction
+
+        $transaksi->delete();
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaction deleted successfully');
+    }
 }
