@@ -137,16 +137,7 @@
             </li>
 
 
-            <li class="menu-label">Mater Umum</li>
-
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class="bx bx-lock"></i>
-                    </div>
-                    <div class="menu-title">Transaksi</div>
-                </a>
-
-            </li>
+           
 
 
         </ul>

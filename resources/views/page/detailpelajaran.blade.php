@@ -84,6 +84,7 @@
                             </div>
                         </a>
                     </li>
+                    @if ($transaksi && $transaksi->status_transaksi == 'success')
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
                             <div class="d-flex align-items-center">
@@ -93,6 +94,17 @@
                             </div>
                         </a>
                     </li>
+                    @elseif (!$transaksi)
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon"><i class='bx bx-bookmark-alt font-18 me-1'></i>
+                                </div>
+                                <div class="tab-title">File Materi</div>
+                            </div>
+                        </a>
+                    </li>
+                    @endif
                     <li class="nav-item" role="presentation">
                       <a class="nav-link disabled" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false">
                           <div class="d-flex align-items-center">
@@ -105,6 +117,7 @@
                 </ul>
                 <div class="tab-content pt-3">
                     <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                        
                       @foreach ($materi as $m )
                         <p>{!! Str::limit(strip_tags($m->materi), 400) !!}</p>
                         @endforeach
@@ -122,12 +135,11 @@
                                         <div class="card-body">
                                             <h6 class="card-title">{{ $f->nama_file }}</h6>
                                             <div class="clearfix">
-                                                @if ($key === 0)
+                                               
                                                     <button class="mb-0 float-start btn btn-primary">Download</button>
-                                                @endif
-                                                @if ($key > 0)
+                                              
                                                     <i class="fa fa-key" aria-hidden="true"></i>
-                                                @endif
+                                            
                                             </div>
                                         </div>
                                     </div>
