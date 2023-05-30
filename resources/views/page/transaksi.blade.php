@@ -134,6 +134,8 @@
                                             <!-- Place your transaction details here -->
                                             <!-- Example: -->
                                             <p>Transaction ID: {{ $pembelian->id }}</p>
+                                            <img src="{{ asset($pembelian->bukti_pembayaran) }}" class="img-fluid" />
+
                                             <p>Status: {{ $pembelian->status_transaksi }}</p>
                                             <!-- Add more details as needed -->
                                         </div>

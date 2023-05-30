@@ -77,7 +77,7 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
     Route::get('/materi-tentor', [MateriController::class, 'tentor'])->name('materi.tentor');
     Route::resource('materi', MateriController::class);
 
-    Route::get('/download-file/{filename}', [MateriController::class, 'download'])->name('download.file');
+    Route::get('/download/{id}', [MateriController::class, 'download'])->name('download');
     Route::delete('/file/{id}', [MateriController::class, 'delete'])->name('file.delete');
 
     Route::get('/allpelajaran', [PelajaranController::class, 'allpelajaran'])->name('allpelajaran');
