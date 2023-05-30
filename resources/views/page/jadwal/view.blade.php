@@ -18,18 +18,22 @@
                 </nav>
             </div>
             <div class="ms-auto">
-                <div class="btn-group">
-                    <a href="{{ route('jadwal.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
-                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                        data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                            href="javascript:;">Action</a>
-                        <a class="dropdown-item" href="javascript:;">Another action</a>
-                        <a class="dropdown-item" href="javascript:;">Something else here</a>
-                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a>
+                @if (Auth::user()->role == 'admin')
+                    <div class="btn-group">
+                        <a href="{{ route('jadwal.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
+                        <button type="button"
+                            class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                                href="javascript:;">Action</a>
+                            <a class="dropdown-item" href="javascript:;">Another action</a>
+                            <a class="dropdown-item" href="javascript:;">Something else here</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                                link</a>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
         <!--end breadcrumb-->
@@ -52,20 +56,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>                                               
-                            <td>
-                                <button type="button" class="btn btn-warning ">Edit</button>
-								<button type="button" class="btn btn-primary ">Primary</button>
-								<button type="button" class="btn btn-danger ">Danger</button>
-                            <td>
-                        </tr> --}}
                         </tbody>
 
                     </table>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="modal fade" id="detailModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="detail-datatable" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button> --}}
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -79,7 +103,7 @@
 
         // lek onok datae
         $(document).ready(function() {
-            $('#example').DataTable({
+            let mainTable = $('#example').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -119,6 +143,32 @@
                         searchable: false
                     }
                 ]
+            });
+
+            $('#example').on('click', '.btn-detail', function() {
+                let selectedData = '';
+                let slug = '';
+                let indexRow = mainTable.rows().nodes().to$().index($(this).closest('tr'));
+                selectedData = mainTable.row(indexRow).data();
+                $('#detail-datatable').DataTable().clear();
+                $('#detail-datatable').DataTable().destroy();
+                console.log(selectedData.slug);
+                slug = selectedData.slug;
+                $('#detail-datatable').DataTable({
+                    ajax: {
+                        "type": "POST",
+                        "url": "{{ route('jadwal.detail-siswa') }}",
+                        "data": {
+                            '_token': "{{ csrf_token() }}",
+                            'slug': slug
+                        }
+                    },
+                    lengthMenu: [5],
+                    columns: [{
+                        data: "name",
+                        name: "name"
+                    }],
+                });
             });
         });
     </script>
