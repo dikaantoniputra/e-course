@@ -75,10 +75,9 @@ class TransaksiController extends Controller
     
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
-            $fileName = $file->getClientOriginalName();
-            $filePath = $file->store('bukti_pembayaran');
+            $path = $request->file('bukti_pembayaran')->store('public/bukti');
+            $transaksi->bukti_pembayaran = 'storage/' . substr($path, 7);
         
-            $transaksi->bukti_pembayaran = $filePath;
         }
         
     

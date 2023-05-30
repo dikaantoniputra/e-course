@@ -245,16 +245,15 @@ class MateriController extends Controller
     }
 
 
-    public function download($filename)
+    public function download($id)
     {
-        // Cek apakah file ada di penyimpanan
-        if (Storage::exists($filename)) {
-            $path = public_path('app/' . $filename);
-            return response()->download($path);
-        }
+        $file = FileMateri::find($id);
 
-        // Jika file tidak ditemukan, tampilkan error atau redirect ke halaman yang sesuai
-        abort(404, 'File not found');
+        // Lakukan validasi apakah file ditemukan atau tidak
+
+        $filePath = storage_path('app/' . $file->lokasi_file);
+
+        return response()->download($filePath, $file->nama_file);
     }
 
     public function delete($id)

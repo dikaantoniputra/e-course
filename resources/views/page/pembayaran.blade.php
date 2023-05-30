@@ -20,6 +20,10 @@
                               <input type="email" class="form-control" id="inputProductTitle" placeholder="{{ $pelajaran->nama_pelajaran }}" disabled>
                             </div>
                             <div class="mb-3">
+                              <label for="inputProductTitle" class="form-label">Product Judul</label>
+                              <input type="email" class="form-control" id="inputProductTitle" placeholder="{{ $pelajaran->harga }}" disabled>
+                            </div>
+                            <div class="mb-3">
                               <label for="inputProductDescription" class="form-label">Bank Transfer</label>
                               <div class="row">
                                 <div class="col-md-4">
@@ -68,7 +72,7 @@
                             </div>
                             <div class="mb-3">
                               <label for="inputProductDescription" class="form-label">Uplod Bukti Pembayaran</label>
-                              <input  type="file" name="bukti_pembayaran" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" >
+                              <input  class="form" type="file" name="bukti_pembayaran" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" >
                             </div>
                           </div>
                          </div>

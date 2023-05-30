@@ -136,7 +136,7 @@
                                             <h6 class="card-title">{{ $f->nama_file }}</h6>
                                             <div class="clearfix">
                                                
-                                                    <button class="mb-0 float-start btn btn-primary">Download</button>
+                                                <a href="{{ route('download', ['id' => $f->id]) }}" class="btn btn-primary">Download</a>
                                               
                                                     <i class="fa fa-key" aria-hidden="true"></i>
                                             
