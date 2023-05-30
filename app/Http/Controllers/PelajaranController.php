@@ -217,7 +217,7 @@ class PelajaranController extends Controller
     {
         $user = auth()->user(); // Assuming you are using Laravel's authentication system and the logged-in user is available through the 'auth' helper function.
 
-        $pelajaran = Pelajaran::with(['jadwal'])->whereDoesntHave('transaksi', function ($query) use ($user) {
+        $pelajaran = Pelajaran::with('jadwal')->whereDoesntHave('transaksi', function ($query) use ($user) {
             $query->where('status_transaksi', 'success')
                 ->where('user_id', $user->id);
         })->get();
