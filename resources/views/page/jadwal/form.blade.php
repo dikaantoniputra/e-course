@@ -25,7 +25,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Mentor Pelajaran</label>
                         <div class="col-sm-9">
                             <select class="form-select" id="role" name="user_id">
@@ -36,7 +36,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-3">
                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Hari Pembelajaran</label>

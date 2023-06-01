@@ -101,16 +101,16 @@ class JadwalController extends Controller
     {
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
-            'user_id' => 'required',
             'hari' => 'required',
             'jam_mulai' => 'required',
             'jam_akhir' => 'required',
         ]);
-
+        $pelajaran = DB::table('pelajarans')
+            ->where('id', $validatedData["pelajaran_id"])->first();
         $jadwal = new Jadwal;
         $jadwal->slug = Str::random(16);
         $jadwal->pelajaran_id = $validatedData["pelajaran_id"];
-        $jadwal->user_id = $validatedData["user_id"];
+        $jadwal->user_id = $pelajaran->user_id;
         $jadwal->hari = $validatedData["hari"];
         $jadwal->jam_mulai = $validatedData["jam_mulai"];
         $jadwal->jam_akhir = $validatedData["jam_akhir"];
