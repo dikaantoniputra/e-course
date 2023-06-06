@@ -83,6 +83,7 @@ class SiswaController extends Controller
             'password' => 'required'
         ]);
 
+        // ini untuk save ketabel user 
         $user = new User;
         $user->slug = Str::random(16);
         $user->name = $validate['name'];
