@@ -1,6 +1,16 @@
 <?php
 
+use App\Models\User;
+use App\Models\Siswa;
+use App\Models\Jadwal;
+use App\Models\Kelase;
+use App\Models\Tentor;
+use App\Models\Pelajaran;
+use App\Models\Transaksi;
+use Illuminate\Http\Request;
 use App\Http\Middleware\CheckRole;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\AuthController;
@@ -36,7 +46,13 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin', function () {
-        return view('page.index');
+        $pelajaran = Pelajaran::count();
+        $siswa = Siswa::count();
+        $tentor = Tentor::count();
+        $transaksi = Transaksi::count();
+        $jadwal = Jadwal::count();
+        $kelase = Kelase::count();
+        return view('page.index', compact('pelajaran','siswa','tentor','transaksi','jadwal','kelase'));
     })->name('admin.dashboard');
 
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
@@ -66,9 +82,28 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 
 Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () {
-    Route::get('/', function () {
-        return view('page.index');
+    Route::get('/tentor', function () {
+        // Ambil data pengguna yang sedang login
+        $user = Auth::user();
+        
+        // Hitung jumlah pelajaran yang ditangani oleh pengguna yang login
+        $pelajaranCount = $user->pelajaran->count();
+        $jadwal = $user->jadwal->count();
+        $materi = $user->materi->count();
+        return view('page.index', compact('pelajaranCount', 'jadwal','materi'));
     })->name('tentor.dashboard');
+
+    Route::get('/siswa', function () {
+        // Ambil data pengguna yang sedang login
+        $user = Auth::user();
+        // Hitung jumlah pelajaran yang ditangani oleh pengguna yang login
+        $pelajaranCount = $user->transaksi->count();
+
+       
+        return view('page.index', compact('pelajaranCount'));
+    })->name('siswa.dashboard');
+    
+    
 
 
     Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
@@ -109,6 +144,6 @@ Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs')->middleware('
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact')->middleware('guest');
 
-Route::get('/allpelajaran', [HomeController::class, 'allpelajaran'])->name('allpelajaran');
+// Route::get('/allpelajaran', [HomeController::class, 'allpelajaran'])->name('allpelajaran');
 
-Route::get('/searchJobs',  [HomeController::class, 'alljob'])->name('searchJobs');
+// Route::get('/searchJobs',  [HomeController::class, 'alljob'])->name('searchJobs');

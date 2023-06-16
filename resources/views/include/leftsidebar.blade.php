@@ -14,7 +14,7 @@
     @if (auth()->user()->role == 'admin')
         <ul class="metismenu" id="menu">
             <li>
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/admin') }}">
                     <div class="parent-icon"><i class='bx bx-home-circle'></i>
                     </div>
                     <div class="menu-title">Dashboard</div>
@@ -98,7 +98,7 @@
     @if (auth()->user()->role == 'tentor')
         <ul class="metismenu" id="menu">
             <li>
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/tentor') }}">
                     <div class="parent-icon"><i class='bx bx-home-circle'></i>
                     </div>
                     <div class="menu-title">Dashboard</div>
@@ -146,7 +146,7 @@
     @if (auth()->user()->role == 'siswa')
         <ul class="metismenu" id="menu">
             <li>
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/siswa') }}">
                     <div class="parent-icon"><i class='bx bx-home-circle'></i>
                     </div>
                     <div class="menu-title">Dashboard</div>
