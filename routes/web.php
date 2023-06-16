@@ -4,14 +4,15 @@ use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendidikanController;
-use App\Http\Controllers\JadwalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,3 +99,16 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+
+Route::get('/', [HomeController::class, 'index'])->name('index')->middleware('guest');
+
+Route::get('/about', [HomeController::class, 'about'])->name('about')->middleware('guest');
+
+Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs')->middleware('guest');
+
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact')->middleware('guest');
+
+Route::get('/allpelajaran', [HomeController::class, 'allpelajaran'])->name('allpelajaran');
+
+Route::get('/searchJobs',  [HomeController::class, 'alljob'])->name('searchJobs');
