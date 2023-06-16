@@ -77,6 +77,19 @@
 
 
 
+@if (auth()->user()->role == 'siswa')  
+<div class="card radius-10">
+    <div class="card-content">
+        <div class="row row-group row-cols-1 row-cols-xl-4 ">
+            <div class="col">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0">Total Mengajar Pelajaran</p>
+                            <h4 class="mb-0 text-primary">{{ $pelajaranCount ?? '' }}</h4>
+                        </div>
+                        <div class="ms-auto"><i class="bx bx-wallet font-35 text-primary"></i>
+                            {{-- bx bx-cart --}}
 
 
 
