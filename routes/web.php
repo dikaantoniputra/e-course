@@ -93,3 +93,8 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
     Route::resource('jadwal', JadwalController::class);
     Route::post('/jadwal/detail-siswa', [JadwalController::class, 'detailSiswa'])->name('jadwal.detail-siswa');
 });
+
+
+Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
