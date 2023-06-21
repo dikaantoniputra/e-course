@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 
 Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () {
-    Route::get('/tentor', function () {
+    Route::get('/tentor-dashboard', function () {
         // Ambil data pengguna yang sedang login
         $user = Auth::user();
         
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
         return view('page.index', compact('pelajaranCount', 'jadwal','materi'));
     })->name('tentor.dashboard');
 
-    Route::get('/siswa', function () {
+    Route::get('/siswa-dashboard', function () {
         // Ambil data pengguna yang sedang login
         $user = Auth::user();
         // Hitung jumlah pelajaran yang ditangani oleh pengguna yang login
