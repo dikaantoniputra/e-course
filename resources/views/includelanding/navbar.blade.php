@@ -27,9 +27,7 @@ $headerClass = $isIndexPage ? 'header-transparent dark' : 'header-light';
 									
 								</li>
 								
-								<li><a href="{{ url('/allpelajaran') }}">Pelajaran<span class="submenu-indicator"></span></a>
-									
-								</li>
+								
 								
 			
 								<li><a href="{{ url('/about') }}">About Us<span class="submenu-indicator"></span></a>
