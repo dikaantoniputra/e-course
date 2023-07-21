@@ -98,9 +98,15 @@ Route::group(['middleware' => ['auth', 'role:tentor,admin,siswa']], function () 
         $user = Auth::user();
         // Hitung jumlah pelajaran yang ditangani oleh pengguna yang login
         $pelajaranCount = $user->transaksi->count();
-
+        $pelajaran = Pelajaran::whereHas('jadwal') // Filter Pelajaran records with associated jadwal
+        ->whereDoesntHave('transaksi', function ($query) use ($user) {
+            $query->where('status_transaksi', 'success')
+                ->where('user_id', $user->id);
+        })
+        ->count();
+    
        
-        return view('page.index', compact('pelajaranCount'));
+        return view('page.index', compact('pelajaranCount','pelajaran'));
     })->name('siswa.dashboard');
     
     

@@ -43,7 +43,6 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Slug</th>
                                 <th>Nama</th>
                                 <th>Alamat</th>
                                 <th>Telepon</th>
@@ -94,10 +93,7 @@
                         data: 'id',
                         name: 'id'
                     },
-                    {
-                        data: 'slug',
-                        name: 'slug'
-                    },
+                 
                     {
                         data: 'user.name',
                         name: 'user.name'

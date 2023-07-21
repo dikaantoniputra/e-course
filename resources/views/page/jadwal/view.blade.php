@@ -21,17 +21,8 @@
                 @if (Auth::user()->role == 'admin')
                     <div class="btn-group">
                         <a href="{{ route('jadwal.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
-                        <button type="button"
-                            class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                                href="javascript:;">Action</a>
-                            <a class="dropdown-item" href="javascript:;">Another action</a>
-                            <a class="dropdown-item" href="javascript:;">Something else here</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
-                                link</a>
-                        </div>
+                       
+                       
                     </div>
                 @endif
             </div>
@@ -47,7 +38,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Slug</th>
+                                
                                 <th>Pelajaran</th>
                                 <th>Nama Tentor</th>
                                 <th>Hari</th>
@@ -104,46 +95,44 @@
         // lek onok datae
         $(document).ready(function() {
             let mainTable = $('#example').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('jadwal.index') }}',
-
-                },
-                columns: [{
-                        data: 'id',
-                        name: 'id'
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('jadwal.index') }}',
                     },
-                    {
-                        data: 'slug',
-                        name: 'slug'
-                    },
-                    {
-                        data: 'pelajaran.nama_pelajaran',
-                        name: 'nama_pelajaran'
-                    },
-                    {
-                        data: 'user.name',
-                        name: 'nama_tentor'
-                    },
-                    {
-                        data: 'hari',
-                        name: 'hari'
-                    },
-                    {
-                        data: 'jam_mulai',
-                        render: function(data, type, row) {
-                            return data + ' - ' + row.jam_akhir;
+                    columns: [
+                        {
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'pelajaran.nama_pelajaran',
+                            name: 'nama_pelajaran'
+                        },
+                        {
+                            data: 'user.name',
+                            name: 'nama_tentor'
+                        },
+                        {
+                            data: 'hari',
+                            name: 'hari'
+                        },
+                        {
+                            data: 'jam_mulai',
+                            render: function(data, type, row) {
+                                // Assuming "data" is in the format 'HH:mm:00', we'll remove the last ":00".
+                                return data.slice(0, -3) + ' - ' + row.jam_akhir.slice(0, -3);
+                            }
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
                         }
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
+                    ]
+                });
+
 
             $('#example').on('click', '.btn-detail', function() {
                 let selectedData = '';

@@ -175,8 +175,25 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <p class="mb-0">Total Mengajar Pelajaran</p>
+                            <p class="mb-0">Total Pelajaran Yang Di Beli</p>
                             <h4 class="mb-0 text-primary">{{ $pelajaranCount ?? '' }}</h4>
+                        </div>
+                        <div class="ms-auto"><i class="bx bx-wallet font-35 text-primary"></i>
+                            {{-- bx bx-cart --}}
+                         
+                        </div>
+                    </div>
+                    <div class="progress radius-10 my-2" style="height:4px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%"></div>
+                    </div>        
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0">Total Pelajaran Yang Belum Di Beli</p>
+                            <h4 class="mb-0 text-primary">{{ $pelajaran ?? '' }}</h4>
                         </div>
                         <div class="ms-auto"><i class="bx bx-wallet font-35 text-primary"></i>
                             {{-- bx bx-cart --}}

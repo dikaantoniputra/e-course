@@ -21,17 +21,8 @@
                 @if (Auth::user()->role == 'admin')
                     <div class="btn-group">
                         <a href="{{ route('pelajaran.create') }}" class="btn btn-primary">Tambah Data @yield('title')</a>
-                        <button type="button"
-                            class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                                href="javascript:;">Action</a>
-                            <a class="dropdown-item" href="javascript:;">Another action</a>
-                            <a class="dropdown-item" href="javascript:;">Something else here</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
-                                link</a>
-                        </div>
+                       
+                       
                     </div>
                 @endif
             </div>
@@ -46,10 +37,10 @@
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Id</th>
                                 <th>Pendidikan</th>
                                 <th>Tentor</th>
-                                <th>Nama</th>
+                                <th>Pelajaran</th>
                                 <th>Harga</th>
                                 @if (Auth::user()->role == 'admin')
                                     <th>Action</th>
@@ -72,9 +63,7 @@
 
 @push('after-script')
     <script>
-        // $(document).ready(function() {
-        //     $('#example').DataTable();
-        //   } );
+      
 
 
         $(document).ready(function() {
@@ -95,15 +84,15 @@
                     },
                     {
                         data: 'user.name',
-                        name: 'tentor'
+                        name: 'user.name'
                     },
                     {
                         data: 'nama_pelajaran',
-                        name: 'email'
+                        name: 'nama_pelajaran'
                     },
                     {
                         data: 'harga_pelajaran',
-                        name: 'name_submitter'
+                        name: 'harga_pelajaran'
                     },
                     @if (Auth::user()->role == 'admin')
                         {

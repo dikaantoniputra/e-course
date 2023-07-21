@@ -154,27 +154,33 @@ class JadwalController extends Controller
      * @param  \App\Models\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, $id)
     {
-
         $validatedData = $request->validate([
             'pelajaran_id' => 'required',
-            'user_id' => 'required',
             'hari' => 'required',
             'jam_mulai' => 'required',
             'jam_akhir' => 'required',
         ]);
-
-        $jadwal = Jadwal::where('slug', $slug)->first();
+    
+        $pelajaran = DB::table('pelajarans')
+            ->where('id', $validatedData["pelajaran_id"])->first();
+    
+        $jadwal = Jadwal::find($id);
+        if (!$jadwal) {
+            return redirect()->route('jadwal.index')->with('error', 'Jadwal not found.');
+        }
+    
         $jadwal->pelajaran_id = $validatedData["pelajaran_id"];
-        $jadwal->user_id = $validatedData["user_id"];
+        $jadwal->user_id = $pelajaran->user_id;
         $jadwal->hari = $validatedData["hari"];
         $jadwal->jam_mulai = $validatedData["jam_mulai"];
         $jadwal->jam_akhir = $validatedData["jam_akhir"];
         $jadwal->save();
-
-        return redirect()->route('jadwal.index');
+    
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

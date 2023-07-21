@@ -46,7 +46,7 @@
                     <div class="menu-title">Pelajaran</div>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ url('materi') }}">
                     <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="menu-title">Kelas</div>
                 </a>
 
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ route('jadwal.index') }}">
                     <div class="parent-icon"><i class="bx bx-grid-alt"></i>
