@@ -29,13 +29,13 @@ $headerClass = $isIndexPage ? 'header-transparent dark' : 'header-light';
 								
 								
 								
-			
+{{-- 			
 								<li><a href="{{ url('/about') }}">About Us<span class="submenu-indicator"></span></a>
 								</li>
 								<li><a href="{{ url('/contact') }}">Contacts<span class="submenu-indicator"></span></a>
 								</li>
 								<li><a href="{{ url('/faqs') }}">FAQ's<span class="submenu-indicator"></span></a>
-								</li>
+								</li> --}}
 						
 								
 							</ul>
