@@ -101,6 +101,23 @@
                    
                 </div>
             </div>
+
+            <div class="col pt-2">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0">Total Pendapatan</p>
+                            <h4 class="mb-0 text-warning">{{ $totalJumlah ?? '' }}</h4>
+                        </div>
+                        <div class="ms-auto"><i class="bx bx-wallet font-35 text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="progress radius-10 my-2" style="height:4px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
+                    </div>
+                   
+                </div>
+            </div>
             
         </div>
         

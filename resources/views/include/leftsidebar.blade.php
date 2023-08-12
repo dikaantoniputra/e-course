@@ -91,6 +91,15 @@
 
             </li>
 
+            <li>
+                <a href="{{ url('laporan') }}">
+                    <div class="parent-icon"><i class="bx bx-lock"></i>
+                    </div>
+                    <div class="menu-title">Laporan</div>
+                </a>
+
+            </li>
+
 
         </ul>
     @endif
@@ -135,6 +144,8 @@
                     <div class="menu-title">Jadwal</div>
                 </a>
             </li>
+
+            
 
 
            
@@ -195,6 +206,8 @@
                 </a>
 
             </li>
+
+          
 
 
         </ul>

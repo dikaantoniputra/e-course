@@ -23,6 +23,7 @@ use App\Http\Controllers\TentorController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +53,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         $transaksi = Transaksi::count();
         $jadwal = Jadwal::count();
         $kelase = Kelase::count();
-        return view('page.index', compact('pelajaran','siswa','tentor','transaksi','jadwal','kelase'));
+       
+        $totalJumlah = Transaksi::join('pelajarans', 'transaksis.pelajaran_id', '=', 'pelajarans.id')
+    ->sum('pelajarans.harga_pelajaran');
+
+        return view('page.index', compact('pelajaran','siswa','tentor','transaksi','jadwal','kelase','totalJumlah'));
     })->name('admin.dashboard');
 
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
@@ -77,6 +82,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/kelase', [KelasController::class, 'index'])->name('kelase.index');
     Route::resource('kelase', KelasController::class);
+
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+
 });
 
 
@@ -144,12 +152,3 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/', [HomeController::class, 'index'])->name('index')->middleware('guest');
 
-Route::get('/about', [HomeController::class, 'about'])->name('about')->middleware('guest');
-
-Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs')->middleware('guest');
-
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact')->middleware('guest');
-
-// Route::get('/allpelajaran', [HomeController::class, 'allpelajaran'])->name('allpelajaran');
-
-// Route::get('/searchJobs',  [HomeController::class, 'alljob'])->name('searchJobs');
